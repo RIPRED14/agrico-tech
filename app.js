@@ -38,6 +38,26 @@ const DEFAULT_TRAITEMENTS = [
     { name: "Solution assainissante", usage: "Désinfection eau lavage", dosage: "50 ppm", cost: 2.20 }
 ];
 
+const DEFAULT_FOURNISSEURS = [
+    { name: "Coopérative Souss", region: "Taroudant", contracts: "Tomates, Agrumes", waste: "12%", volume: "420 Tonnes", status: "Payé" },
+    { name: "AgroAtlas Maroc", region: "Agadir", contracts: "Haricots Verts", waste: "18%", volume: "280 Tonnes", status: "En cours" },
+    { name: "Clémentines du Sud", region: "Berkane", contracts: "Agrumes", waste: "8%", volume: "650 Tonnes", status: "Payé" },
+    { name: "Maraîchers du Loukkos", region: "Larache", contracts: "Courgettes", waste: "15%", volume: "190 Tonnes", status: "En cours" }
+];
+
+const DEFAULT_CLIENTS = [
+    { name: "EuroFood Rungis", destination: "France", activeOrders: 2, volume: "45 Tonnes", billing: "98,500 EUR", status: "Réglé" },
+    { name: "Munich Fresh Fruit", destination: "Allemagne", activeOrders: 1, volume: "22 Tonnes", billing: "48,200 EUR", status: "Attente" },
+    { name: "Mercabarna Import", destination: "Espagne", activeOrders: 3, volume: "64 Tonnes", billing: "128,400 EUR", status: "Réglé" }
+];
+
+const DEFAULT_HR = [
+    { name: "Yassine El Fassi", role: "Chef de Ligne de Tri", rate: 18.50, hours: 160, salary: "2,960.00 EUR", status: "Validé" },
+    { name: "Amina Aït Ali", role: "Opérateur de Calibrage", rate: 12.00, hours: 155, salary: "1,860.00 EUR", status: "Validé" },
+    { name: "Khadija Soussi", role: "Opérateur de Conditionnement", rate: 12.00, hours: 162, salary: "1,944.00 EUR", status: "En cours" },
+    { name: "Rachid Idrissi", role: "Cariste / Frigoriste", rate: 15.00, hours: 158, salary: "2,370.00 EUR", status: "Validé" }
+];
+
 function initDB() {
     if (!localStorage.getItem("agrico_lots")) {
         localStorage.setItem("agrico_lots", JSON.stringify(DEFAULT_LOTS));
@@ -47,6 +67,15 @@ function initDB() {
     }
     if (!localStorage.getItem("agrico_consommables")) {
         localStorage.setItem("agrico_consommables", JSON.stringify(DEFAULT_CONSOMMABLES));
+    }
+    if (!localStorage.getItem("agrico_fournisseurs")) {
+        localStorage.setItem("agrico_fournisseurs", JSON.stringify(DEFAULT_FOURNISSEURS));
+    }
+    if (!localStorage.getItem("agrico_clients")) {
+        localStorage.setItem("agrico_clients", JSON.stringify(DEFAULT_CLIENTS));
+    }
+    if (!localStorage.getItem("agrico_hr")) {
+        localStorage.setItem("agrico_hr", JSON.stringify(DEFAULT_HR));
     }
 }
 
@@ -77,11 +106,15 @@ function initNavigation() {
     const tabMeta = {
         dashboard: { title: "Tableau de bord de pilotage", subtitle: "Suivi en temps réel des lots de fruits & légumes destinés à l'Europe" },
         receptions: { title: "Lots & Réceptions", subtitle: "Registre des apports de matières premières et agréage qualité" },
+        fournisseurs: { title: "Fournisseurs & Coopératives", subtitle: "Base d'approvisionnement, contrats de culture et agréage" },
         tri: { title: "Suivi des Lignes de Tri", subtitle: "Rendements de tri, pack-out rate et contrôle des rebuts" },
         consommables: { title: "Nomenclature des Consommables & Traitements", subtitle: "Contrôle des intrants de traitement de conservation et emballages" },
         frigos: { title: "Efficacité Énergétique des Chambres Froides", subtitle: "Consommation électrique et coûts énergétiques en temps réel" },
+        clients: { title: "Clients & Commandes Exportation Europe", subtitle: "Suivi de la facturation et des contrats B2B" },
         expeditions: { title: "Expéditions d'Export", subtitle: "Suivi logistique et fret maritime / routier vers l'Europe" },
+        hr: { title: "Ressources Humaines & Paie de Station", subtitle: "Suivi horaire, taux d'activité et calcul de la masse salariale" },
         costs: { title: "Calcul des Coûts de Revient", subtitle: "Analyse globale de rentabilité financière et marge par lot" },
+        analytics: { title: "Analytiques Avancés", subtitle: "Marges opérationnelles consolidées, structure de coûts et écarts" },
         ia: { title: "Assistant IA & Rapports de Synthèse", subtitle: "Génération automatique des audits financiers et de logistique" }
     };
 
@@ -110,6 +143,8 @@ function initNavigation() {
 // Graphiques Globaux
 let costChart = null;
 let wasteChart = null;
+let marginsChart = null;
+let structureChart = null;
 
 function initCharts() {
     const ctxCost = document.getElementById('costBreakdownChart').getContext('2d');
@@ -146,6 +181,45 @@ function initCharts() {
             datasets: [{
                 data: [60, 35, 5],
                 backgroundColor: ['#ef4444', '#f59e0b', '#64748b']
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom', labels: { boxWidth: 12 } }
+            }
+        }
+    });
+
+    const ctxMarges = document.getElementById('analyticsMargesChart').getContext('2d');
+    marginsChart = new Chart(ctxMarges, {
+        type: 'line',
+        data: {
+            labels: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin'],
+            datasets: [
+                { label: 'Tomate Cerise', data: [18, 22, 20, 24, 25, 23], borderColor: '#10b981', tension: 0.2, fill: false },
+                { label: 'Haricot Vert', data: [15, 14, 16, 15, 18, 17], borderColor: '#3b82f6', tension: 0.2, fill: false },
+                { label: 'Agrumes', data: [12, 15, 13, 12, 14, 16], borderColor: '#f97316', tension: 0.2, fill: false }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' }
+            }
+        }
+    });
+
+    const ctxStructure = document.getElementById('analyticsStructureChart').getContext('2d');
+    structureChart = new Chart(ctxStructure, {
+        type: 'polarArea',
+        data: {
+            labels: ['Achat Brut', 'Tri & Rebuts', 'Cartons & Palettes', 'Fret Export', 'Énergie Froide', 'Main d\'œuvre'],
+            datasets: [{
+                data: [42, 18, 15, 12, 5, 8],
+                backgroundColor: ['#10b981', '#ef4444', '#3b82f6', '#a855f7', '#f59e0b', '#64748b']
             }]
         },
         options: {
@@ -236,8 +310,6 @@ function calculateEnergyCosts() {
     frigoConsignes.frigo2 = c2;
     frigoConsignes.frigo3 = c3;
 
-    // Simulation de consommation selon la consigne : Moins de température = plus de KWh
-    // Formule : KWh = Volume * (35 - Consigne) * 0.08
     const kwhFrigo1 = 14.5 * (35 - c1) * 0.08;
     const kwhFrigo2 = 28.0 * (35 - c2) * 0.08;
     const kwhFrigo3 = 8.2 * (35 - c3) * 0.08;
@@ -254,7 +326,6 @@ function calculateEnergyCosts() {
     document.getElementById('cost-frigo-2').innerText = `${costFrigo2.toFixed(2)} €`;
     document.getElementById('cost-frigo-3').innerText = `${costFrigo3.toFixed(2)} €`;
 
-    // Totaux mensuels (30 jours)
     const totalKWhMonth = (kwhFrigo1 + kwhFrigo2 + kwhFrigo3) * 30;
     const totalCostMonth = totalKWhMonth * priceKWh;
 
@@ -281,13 +352,11 @@ function initAIChatAndScanner() {
         });
     }
 
-    // Simulation de Drag & Drop pour le scan IA
     if (dropzone) {
         dropzone.addEventListener('click', () => {
             badgeFile.classList.remove('hidden');
             addLog("success", "IA OCR : Facture d'électricité scannée (4,500 KWh extraits).");
             
-            // Simuler l'analyse de la facture dans le chat IA
             const chatBody = document.getElementById('ai-chat-body');
             chatBody.innerHTML += `
                 <div class="ai-msg user-msg bg-slate-100 p-3 rounded-lg max-w-[80%] self-end">
@@ -301,7 +370,6 @@ function initAIChatAndScanner() {
         });
     }
 
-    // Générateur de Rapports IA
     if (btnGenerate) {
         btnGenerate.addEventListener('click', () => {
             const period = selectPeriod.value;
@@ -332,7 +400,7 @@ function initAIChatAndScanner() {
                 
                 mois: `Rapport Analytique Mensuel : 
                 - Volume d'export vers l'Europe : 108,000 kg.
-                - Coût de revient moyen pondéré : 2.01 €/kg.
+                - Coût de revient moyen prévalant : 2.01 €/kg.
                 - Chiffre d'affaires brut estimé (FOB) : 265,000 EUR.
                 - Coûts d'électricité des chambres froides : 1,209.60 EUR (Stabilité de la chaîne du froid).
                 - Intrants de conservation consommés : 45L de cire de carnauba.`,
@@ -394,9 +462,12 @@ function renderAllData() {
     updateKPIs(lots);
     renderLogs();
     renderReceptions(lots);
+    renderFournisseurs();
     renderTri(lots);
     renderConsommables();
+    renderClients();
     renderExpeditions(lots);
+    renderHR();
     renderCosts(lots);
 }
 
@@ -435,6 +506,22 @@ function renderReceptions(lots) {
             <td>${l.weight.toLocaleString('fr-FR')} kg</td>
             <td>${l.purchasePrice.toFixed(2)} €/kg</td>
             <td><span class="badge-status-table status-completed">Agréé A</span></td>
+        </tr>
+    `).join('');
+}
+
+function renderFournisseurs() {
+    const suppliers = JSON.parse(localStorage.getItem("agrico_fournisseurs")) || DEFAULT_FOURNISSEURS;
+    const tbody = document.querySelector("#fournisseurs-table tbody");
+    if (!tbody) return;
+    tbody.innerHTML = suppliers.map(s => `
+        <tr>
+            <td><strong>${s.name}</strong></td>
+            <td>${s.region}</td>
+            <td>${s.contracts}</td>
+            <td style="color:var(--danger); font-weight:600;">${s.waste}</td>
+            <td>${s.volume}</td>
+            <td><span class="badge-status-table ${s.status === 'Payé' ? 'status-completed' : 'status-processing'}">${s.status}</span></td>
         </tr>
     `).join('');
 }
@@ -485,6 +572,22 @@ function renderConsommables() {
     }
 }
 
+function renderClients() {
+    const clients = JSON.parse(localStorage.getItem("agrico_clients")) || DEFAULT_CLIENTS;
+    const tbody = document.querySelector("#clients-table tbody");
+    if (!tbody) return;
+    tbody.innerHTML = clients.map(c => `
+        <tr>
+            <td><strong>${c.name}</strong></td>
+            <td>${c.destination}</td>
+            <td>${c.activeOrders}</td>
+            <td>${c.volume}</td>
+            <td><strong>${c.billing}</strong></td>
+            <td><span class="badge-status-table ${c.status === 'Réglé' ? 'status-completed' : 'status-processing'}">${c.status}</span></td>
+        </tr>
+    `).join('');
+}
+
 function renderExpeditions(lots) {
     const tbody = document.querySelector("#expeditions-table tbody");
     if (!tbody) return;
@@ -504,6 +607,22 @@ function renderExpeditions(lots) {
     }).join('');
 }
 
+function renderHR() {
+    const hr = JSON.parse(localStorage.getItem("agrico_hr")) || DEFAULT_HR;
+    const tbody = document.querySelector("#hr-table tbody");
+    if (!tbody) return;
+    tbody.innerHTML = hr.map(h => `
+        <tr>
+            <td><strong>${h.name}</strong></td>
+            <td>${h.role}</td>
+            <td>${h.rate.toFixed(2)} €/h</td>
+            <td>${h.hours} h</td>
+            <td style="font-weight:600;">${h.salary}</td>
+            <td><span class="badge-status-table ${h.status === 'Validé' ? 'status-completed' : 'status-processing'}">${h.status}</span></td>
+        </tr>
+    `).join('');
+}
+
 function renderCosts(lots) {
     const tbody = document.querySelector("#costs-summary-table tbody");
     if (!tbody) return;
@@ -514,7 +633,6 @@ function renderCosts(lots) {
         const processCost = (l.weight * l.packingCost) + (l.laborHours * 15);
         const logCost = (l.weight * (l.yield / 100)) * l.freightCost;
         
-        // Intégrer l'impact de l'énergie des chambres froides sur le coût de revient (approx 0.05 €/kg)
         const energyCost = (l.weight * (l.yield / 100)) * 0.05;
         const totalLotCost = rawCost + processCost + logCost + energyCost;
         const realCostPerKg = totalLotCost / (l.weight * (l.yield / 100));

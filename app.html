@@ -35,25 +35,41 @@
                     <i data-lucide="package-open"></i>
                     <span>Lots & Réceptions</span>
                 </button>
+                <button class="menu-item" data-tab="fournisseurs">
+                    <i data-lucide="users"></i>
+                    <span>Fournisseurs & Coop</span>
+                </button>
                 <button class="menu-item" data-tab="tri">
                     <i data-lucide="layers"></i>
                     <span>Lignes de Tri</span>
                 </button>
                 <button class="menu-item" data-tab="consommables">
                     <i data-lucide="box"></i>
-                    <span>Consommables & Traitements</span>
+                    <span>Consommables & Trait.</span>
                 </button>
                 <button class="menu-item" data-tab="frigos">
                     <i data-lucide="thermometer"></i>
                     <span>Chambres Froides & Énergie</span>
                 </button>
+                <button class="menu-item" data-tab="clients">
+                    <i data-lucide="shopping-bag"></i>
+                    <span>Clients & Commandes UE</span>
+                </button>
                 <button class="menu-item" data-tab="expeditions">
                     <i data-lucide="truck"></i>
                     <span>Expéditions (UE)</span>
                 </button>
+                <button class="menu-item" data-tab="hr">
+                    <i data-lucide="user-check"></i>
+                    <span>Ressources Humaines</span>
+                </button>
                 <button class="menu-item" data-tab="costs">
                     <i data-lucide="calculator"></i>
                     <span>Coût de Revient</span>
+                </button>
+                <button class="menu-item" data-tab="analytics">
+                    <i data-lucide="bar-chart-3"></i>
+                    <span>Analytiques Avancés</span>
                 </button>
                 <button class="menu-item" data-tab="ia">
                     <i data-lucide="bot" style="color: #60a5fa;"></i>
@@ -246,7 +262,35 @@
                     </div>
                 </section>
 
-                <!-- ==================== VIEW 3: TRI (LIGNES DE TRI) ==================== -->
+                <!-- ==================== VIEW 3: FOURNISSEURS ==================== -->
+                <section class="view-section" id="view-fournisseurs">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Suivi des Fournisseurs & Coopératives Partenaires</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table" id="fournisseurs-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Nom / Raison Sociale</th>
+                                            <th>Région</th>
+                                            <th>Contrats Produits</th>
+                                            <th>Taux de Rebut Moyen</th>
+                                            <th>Volume Fourni Annuel</th>
+                                            <th>Statut Paiement</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Dynamic content -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ==================== VIEW 4: TRI (LIGNES DE TRI) ==================== -->
                 <section class="view-section" id="view-tri">
                     <div class="grid-two-cols">
                         <div class="card">
@@ -287,7 +331,7 @@
                     </div>
                 </section>
 
-                <!-- ==================== VIEW 4: CONSOMMABLES ==================== -->
+                <!-- ==================== VIEW 5: CONSOMMABLES ==================== -->
                 <section class="view-section" id="view-consommables">
                     <div class="grid-two-cols">
                         <!-- Table des consommables -->
@@ -340,10 +384,9 @@
                     </div>
                 </section>
 
-                <!-- ==================== VIEW 5: FRIGOS & ENERGIE ==================== -->
+                <!-- ==================== VIEW 6: FRIGOS & ENERGIE ==================== -->
                 <section class="view-section" id="view-frigos">
                     <div class="dashboard-grid">
-                        
                         <!-- Frigo 1 Card -->
                         <div class="card frigo-card">
                             <div class="frigo-header">
@@ -434,11 +477,38 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </section>
 
-                <!-- ==================== VIEW 6: EXPEDITIONS ==================== -->
+                <!-- ==================== VIEW 7: CLIENTS & COMMANDES ==================== -->
+                <section class="view-section" id="view-clients">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Bilan des Commandes & Factures Export Europe</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table" id="clients-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Client Europe</th>
+                                            <th>Destination</th>
+                                            <th>Commandes En cours</th>
+                                            <th>Volume Commandé</th>
+                                            <th>Montant Facturé H.T.</th>
+                                            <th>État Encaissement</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Dynamic content -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ==================== VIEW 8: EXPEDITIONS ==================== -->
                 <section class="view-section" id="view-expeditions">
                     <div class="card">
                         <div class="card-header">
@@ -466,7 +536,35 @@
                     </div>
                 </section>
 
-                <!-- ==================== VIEW 7: COSTS (COÛT DE REVIENT) ==================== -->
+                <!-- ==================== VIEW 9: RESSOURCES HUMAINES (HR) ==================== -->
+                <section class="view-section" id="view-hr">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Gestion des Équipes & Paie Ligne</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table" id="hr-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Collaborateur</th>
+                                            <th>Poste Ligne</th>
+                                            <th>Taux Horaire (€/h)</th>
+                                            <th>Heures Planifiées</th>
+                                            <th>Paie Estimée</th>
+                                            <th>Statut Validation</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Dynamic content -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ==================== VIEW 10: COSTS (COÛT DE REVIENT) ==================== -->
                 <section class="view-section" id="view-costs">
                     <div class="card">
                         <div class="card-header">
@@ -495,10 +593,35 @@
                     </div>
                 </section>
 
-                <!-- ==================== VIEW 8: IA ASSISTANT & RAPPORTS ==================== -->
+                <!-- ==================== VIEW 11: ANALYTICS ==================== -->
+                <section class="view-section" id="view-analytics">
+                    <div class="grid-two-cols">
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>Évolution des Marges Nettes par Produit</h2>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-wrapper">
+                                    <canvas id="analyticsMargesChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>Structure Consolidée des Coûts réels</h2>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-wrapper">
+                                    <canvas id="analyticsStructureChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ==================== VIEW 12: IA ASSISTANT & RAPPORTS ==================== -->
                 <section class="view-section" id="view-ia">
                     <div class="grid-two-cols">
-                        
                         <!-- AI Assistant Terminal -->
                         <div class="card flex flex-col h-[500px]">
                             <div class="card-header border-b pb-4">
@@ -556,7 +679,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </section>
 
