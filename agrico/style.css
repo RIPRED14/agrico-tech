@@ -115,9 +115,14 @@ body {
     gap: 14px;
     padding: 12px 16px;
     color: #94a3b8;
-    text-decoration: none;
+    background: none;
+    border: none;
+    text-align: left;
+    width: 100%;
+    cursor: pointer;
     border-radius: var(--radius-md);
     font-weight: 500;
+    font-size: 14px;
     transition: all 0.2s ease;
 }
 
@@ -236,6 +241,25 @@ body {
     background-color: #e2e8f0;
 }
 
+/* Dynamic Views and active status */
+.views-wrapper {
+    position: relative;
+}
+
+.view-section {
+    display: none;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.view-section.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
 /* Dashboard Grid & Cards */
 .dashboard-grid {
     display: grid;
@@ -251,6 +275,12 @@ body {
     grid-column: span 3;
 }
 
+.grid-two-cols {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 24px;
+}
+
 .card {
     background-color: var(--bg-card);
     border-radius: var(--radius-lg);
@@ -259,6 +289,7 @@ body {
     padding: 24px;
     display: flex;
     flex-direction: column;
+    margin-bottom: 24px;
 }
 
 .card-header {
@@ -478,7 +509,7 @@ body {
 }
 
 .pie-chart-wrapper {
-    height: 220px;
+    height: 240px;
 }
 
 .cost-summary {
@@ -503,6 +534,44 @@ body {
     font-size: 16px;
     border-bottom: 1px solid rgba(16, 185, 129, 0.2);
     padding-bottom: 8px;
+}
+
+/* Logs Feed */
+.logs-feed {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 8px;
+}
+
+.log-item {
+    font-family: monospace;
+    font-size: 12px;
+    padding: 8px 12px;
+    background-color: #f8fafc;
+    border-left: 3px solid var(--border-color);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    line-height: 1.4;
+}
+
+.log-item.success {
+    border-left-color: var(--success);
+    background-color: var(--primary-light);
+    color: #065f46;
+}
+
+.log-item.warning {
+    border-left-color: var(--warning);
+    background-color: #fffbeb;
+    color: #92400e;
+}
+
+.log-item.info {
+    border-left-color: var(--info);
+    background-color: #eff6ff;
+    color: #1e40af;
 }
 
 /* Tables styling */
