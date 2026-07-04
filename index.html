@@ -1,656 +1,378 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Reda | Ingénierie Logicielle & Solutions ERP Industrielles</title>
-  <meta name="description" content="Développeur de solutions ERP sur-mesure pour la Pêche & Maritime (ELABBAR), la Pharmacie, la Location de Véhicules et l'Agriculture. Explorez les démos interactives.">
-  <link rel="stylesheet" href="index.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agrico-Tech ERP | Gestion & Contrôle des Coûts Industriels</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-  <!-- Background Ambient Lights -->
-  <div class="gradient-bg"></div>
-
-  <!-- Navigation Header -->
-  <header class="header" id="header">
-    <div class="container header-container">
-      <a href="#" class="logo" id="logo-link">
-        <div class="logo-icon">R</div>
-        <span>Reda<span class="logo-tech">.systems</span></span>
-      </a>
-
-      <!-- Desktop Nav -->
-      <nav class="nav" id="nav-menu">
-        <a href="#secteurs" class="nav-link">Secteurs</a>
-        <a href="#demos" class="nav-link">Hub Démos</a>
-        <a href="#expertise" class="nav-link">Expertise</a>
-        <a href="#contact" class="nav-link">Contact</a>
-        <a href="#contact" class="btn btn-secondary" style="padding: 8px 16px; font-size: 14px;">Demander un Devis</a>
-      </nav>
-
-      <!-- Hamburger toggle -->
-      <button class="menu-toggle" id="menu-toggle" aria-label="Menu principal">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </div>
-  </header>
-
-  <!-- Hero Section -->
-  <section class="hero" id="hero">
-    <div class="container hero-layout">
-      <div class="hero-content fade-in-up">
-        <div class="hero-tag">
-          <span class="pulse-dot"></span>
-          <span>Démos ERP Interactives Disponibles</span>
-        </div>
-        <h1>L'ingénierie logicielle au service de votre secteur</h1>
-        <p class="hero-desc">
-          Conception d'architectures ERP industrielles robustes, de systèmes de traçabilité en temps réel et de tableaux de bord prédictifs pour propulser votre entreprise.
-        </p>
-        <div class="hero-actions">
-          <a href="#demos" class="btn btn-primary">Explorer nos Démos</a>
-          <a href="#expertise" class="btn btn-secondary">Consulter l'Expertise</a>
-        </div>
-        <div class="hero-metrics">
-          <div class="metric-item">
-            <span class="metric-val" id="metric-uptime">99.98%</span>
-            <span class="metric-label">Uptime Garanti</span>
-          </div>
-          <div class="metric-item">
-            <span class="metric-val" id="metric-sectors">4</span>
-            <span class="metric-label">Industries Cibles</span>
-          </div>
-          <div class="metric-item">
-            <span class="metric-val" id="metric-data">100%</span>
-            <span class="metric-label">Code Propriétaire</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Tech IDE Mockup -->
-      <div class="hero-visual fade-in-up" style="transition-delay: 0.15s;">
-        <div class="mockup-container">
-          <div class="mockup-header">
-            <div class="mockup-dot red"></div>
-            <div class="mockup-dot yellow"></div>
-            <div class="mockup-dot green"></div>
-            <span style="color: #64748b; font-size: 11px; margin-left: 8px; font-family: monospace;">backend/src/elabbar/crew_log.py</span>
-          </div>
-          <div class="mockup-content">
-            <div class="code-line">
-              <span class="line-num">1</span>
-              <span><span class="syntax-kw">import</span> face_recognition <span class="syntax-kw">as</span> fr</span>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-container">
+                    <i data-lucide="sprout" class="logo-icon"></i>
+                    <span class="logo-text">Agrico<span>Tech</span></span>
+                </div>
+                <span class="badge-status">Export EU</span>
             </div>
-            <div class="code-line">
-              <span class="line-num">2</span>
-              <span><span class="syntax-kw">import</span> database <span class="syntax-kw">as</span> db</span>
-            </div>
-            <div class="code-line">
-              <span class="line-num">3</span>
-              <span></span>
-            </div>
-            <div class="code-line">
-              <span class="line-num">4</span>
-              <span><span class="syntax-kw">def</span> <span class="syntax-fn">process_crew_entry</span>(photo_stream, port_id):</span>
-            </div>
-            <div class="code-line">
-              <span class="line-num">5</span>
-              <span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-comment"># Analyse faciale pour l'équipage ELABBAR</span></span>
-            </div>
-            <div class="code-line">
-              <span class="line-num">6</span>
-              <span>&nbsp;&nbsp;&nbsp;&nbsp;encoding = fr.<span class="syntax-fn">encode_face</span>(photo_stream)</span>
-            </div>
-            <div class="code-line">
-              <span class="line-num">7</span>
-              <span>&nbsp;&nbsp;&nbsp;&nbsp;member = db.crew.<span class="syntax-fn">find_by_vector</span>(encoding)</span>
-            </div>
-            <div class="code-line">
-              <span class="line-num">8</span>
-              <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-            </div>
-            <div class="code-line">
-              <span class="line-num">9</span>
-              <span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-kw">if</span> member:</span>
-            </div>
-            <div class="code-line">
-              <span class="line-num">10</span>
-              <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;log_id = db.logs.<span class="syntax-fn">register_checkin</span>(member.id, port_id)</span>
-            </div>
-            <div class="code-line">
-              <span class="line-num">11</span>
-              <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;db.fleet.<span class="syntax-fn">update_status</span>(member.vessel_id, <span class="syntax-str">"READY"</span>)</span>
-            </div>
-            <div class="code-line">
-              <span class="line-num">12</span>
-              <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-kw">return</span> { <span class="syntax-str">"status"</span>: <span class="syntax-str">"success"</span>, <span class="syntax-str">"name"</span>: member.name }</span>
-            </div>
-            <div class="code-line">
-              <span class="line-num">13</span>
-              <span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="syntax-kw">return</span> { <span class="syntax-str">"status"</span>: <span class="syntax-str">"unauthorized"</span> }</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Sectors Section -->
-  <section class="section" id="secteurs">
-    <div class="container">
-      <div class="section-header fade-in-up">
-        <span class="tag">Nos Secteurs</span>
-        <h2>Des solutions métiers éprouvées</h2>
-        <p>Une expertise technique pointue mise au service de quatre industries clés exigeant rigueur, traçabilité et efficacité opérationnelle.</p>
-      </div>
-
-      <div class="sector-grid">
-        <!-- Sector 1 -->
-        <div class="sector-card fade-in-up">
-          <div class="sector-icon">
-            <!-- Maritime Anchor/Ship SVG -->
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-8m0 0a3 3 0 0 0 3-3V7a3 3 0 0 0-6 0v4a3 3 0 0 0 3 3zm0-10V2m-7 9h14M5 12a7 7 0 0 0 14 0"/></svg>
-          </div>
-          <div class="sector-tagline">Pêche & Maritime</div>
-          <h3>La Suite ELABBAR</h3>
-          <p class="sector-desc">
-            Gestion intégrée des usines de conditionnement de poisson et pilotage de flotte. Traçabilité complète du filet de pêche au client final avec codes QR de lot et authentification biométrique.
-          </p>
-          <ul class="sector-features">
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Suivi par QR codes et codes-barres</span>
-            </li>
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Contrôle d'accès biométrique en criée</span>
-            </li>
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Géolocalisation & rapport de pêche réglementaire</span>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Sector 2 -->
-        <div class="sector-card fade-in-up" style="transition-delay: 0.1s;">
-          <div class="sector-icon">
-            <!-- Pharma Capsule SVG -->
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg>
-          </div>
-          <div class="sector-tagline">Informatique Pharmaceutique</div>
-          <h3>Systèmes de Traçabilité</h3>
-          <p class="sector-desc">
-            Logiciels de gestion conformes aux normes strictes de l'industrie de la santé. Suivi minutieux des lots de médicaments, surveillance thermique en temps réel et alertes intelligentes.
-          </p>
-          <ul class="sector-features">
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Traçabilité moléculaire de bout en bout</span>
-            </li>
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Rapports de conformité réglementaire</span>
-            </li>
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Surveillance automatisée de la chaîne du froid</span>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Sector 3 -->
-        <div class="sector-card fade-in-up" style="transition-delay: 0.2s;">
-          <div class="sector-icon">
-            <!-- Vehicle Key SVG -->
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 2-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0 1.5 1.5M15.5 7.5 14 6"/></svg>
-          </div>
-          <div class="sector-tagline">Location de Véhicules</div>
-          <h3>Gestion de Flotte & Dispatch</h3>
-          <p class="sector-desc">
-            Plannings dynamiques de réservation, contrats automatisés et facturation intégrée. Synchronisation en temps réel des disponibilités et outils analytiques de rentabilité de flotte.
-          </p>
-          <ul class="sector-features">
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Moteur de réservation intelligent</span>
-            </li>
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Génération de factures et contrats automatisée</span>
-            </li>
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Suivi télématique et maintenance préventive</span>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Sector 4 -->
-        <div class="sector-card fade-in-up" style="transition-delay: 0.3s;">
-          <div class="sector-icon">
-            <!-- Agriculture Sprout SVG -->
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
-          </div>
-          <div class="sector-tagline">Agriculture Connectée</div>
-          <h3>Tableaux de Bord de Suivi</h3>
-          <p class="sector-desc">
-            Cartographie des parcelles, suivi des récoltes et gestion logistique. Centralisation des données de capteurs climatiques pour une irrigation et une fertilisation de précision.
-          </p>
-          <ul class="sector-features">
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Cartographie et découpage géospatial</span>
-            </li>
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Alertes gel, sécheresse et météo en temps réel</span>
-            </li>
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Gestion des stocks de récolte & logistique vrac</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Interactive Demo Hub Section -->
-  <section class="section" style="border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border);" id="demos">
-    <div class="container">
-      <div class="section-header fade-in-up">
-        <span class="tag">Hub de Démos</span>
-        <h2>Prenez le contrôle des ERP</h2>
-        <p>Sélectionnez un logiciel métier ci-dessous et lancez le simulateur interactif pour tester l'interface de gestion en direct.</p>
-      </div>
-
-      <!-- Category Filter Tabs -->
-      <div class="demo-controls fade-in-up">
-        <button class="filter-btn active" data-category="all">Tous les ERP</button>
-        <button class="filter-btn" data-category="maritime">Pêche & Maritime</button>
-        <button class="filter-btn" data-category="pharma">Pharmacie</button>
-        <button class="filter-btn" data-category="rental">Location de Véhicules</button>
-        <button class="filter-btn" data-category="agri">Agriculture</button>
-      </div>
-
-      <!-- Demo Cards Grid -->
-      <div class="demo-grid" id="demo-grid">
-        <!-- Card 1: ELABBAR -->
-        <div class="demo-card fade-in-up" data-category="maritime">
-          <div class="demo-img-container">
-            <span class="demo-preview-icon">🐟</span>
-          </div>
-          <div class="demo-card-body">
-            <div class="demo-meta">
-              <span class="demo-badge badge-maritime">Maritime</span>
-              <span class="demo-status"><span class="demo-status-dot"></span>Disponible</span>
-            </div>
-            <h3>ELABBAR Suite v4.2</h3>
-            <p>Superviseur d'usine de transformation halieutique. Inclut le module de capture, la traçabilité des caisses par QR code et les fiches d'équipage biométriques.</p>
-            <div class="demo-tech-list">
-              <span class="tech-tag">Node.js</span>
-              <span class="tech-tag">PostgreSQL</span>
-              <span class="tech-tag">WebSockets</span>
-              <span class="tech-tag">FaceAPI</span>
-            </div>
-            <button class="btn btn-primary launch-demo-btn" data-demo="maritime">Lancer la Démo</button>
-          </div>
-        </div>
-
-        <!-- Card 2: PharmaTrack -->
-        <div class="demo-card fade-in-up" data-category="pharma" style="transition-delay: 0.1s;">
-          <div class="demo-img-container">
-            <span class="demo-preview-icon">💊</span>
-          </div>
-          <div class="demo-card-body">
-            <div class="demo-meta">
-              <span class="demo-badge badge-pharma">Pharmacie</span>
-              <span class="demo-status"><span class="demo-status-dot"></span>Disponible</span>
-            </div>
-            <h3>PharmaTrack Pro</h3>
-            <p>Traçabilité moléculaire et conformité en pharmacopée. Surveille la température des congélateurs via IoT, gère les stocks critiques et le suivi des numéros de lots.</p>
-            <div class="demo-tech-list">
-              <span class="tech-tag">React</span>
-              <span class="tech-tag">Golang</span>
-              <span class="tech-tag">TimescaleDB</span>
-              <span class="tech-tag">IoT MQTT</span>
-            </div>
-            <button class="btn btn-primary launch-demo-btn" data-demo="pharma">Lancer la Démo</button>
-          </div>
-        </div>
-
-        <!-- Card 3: GT Location -->
-        <div class="demo-card fade-in-up" data-category="rental" style="transition-delay: 0.2s;">
-          <div class="demo-img-container">
-            <span class="demo-preview-icon">🚗</span>
-          </div>
-          <div class="demo-card-body">
-            <div class="demo-meta">
-              <span class="demo-badge badge-rental">Location</span>
-              <span class="demo-status"><span class="demo-status-dot"></span>Disponible</span>
-            </div>
-            <h3>GT Location ERP</h3>
-            <p>Système de gestion de flotte automobile. Planification automatique des réservations clients, génération de contrats, gestion de maintenance et facturation Stripe.</p>
-            <div class="demo-tech-list">
-              <span class="tech-tag">Vue.js</span>
-              <span class="tech-tag">Express</span>
-              <span class="tech-tag">PostgreSQL</span>
-              <span class="tech-tag">Stripe API</span>
-            </div>
-            <button class="btn btn-primary launch-demo-btn" data-demo="rental">Lancer la Démo</button>
-          </div>
-        </div>
-
-        <!-- Card 4: AgriFlow -->
-        <div class="demo-card fade-in-up" data-category="agri" style="transition-delay: 0.3s;">
-          <div class="demo-img-container">
-            <span class="demo-preview-icon">🌾</span>
-          </div>
-          <div class="demo-card-body">
-            <div class="demo-meta">
-              <span class="demo-badge badge-agriculture">Agriculture</span>
-              <span class="demo-status"><span class="demo-status-dot"></span>Disponible</span>
-            </div>
-            <h3>AgriFlow Monitor</h3>
-            <p>Optimisation agricole et prédiction de rendement. Intègre la cartographie des champs, l'analyse d'humidité du sol en temps réel et la planification des récoltes.</p>
-            <div class="demo-tech-list">
-              <span class="tech-tag">Next.js</span>
-              <span class="tech-tag">FastAPI</span>
-              <span class="tech-tag">InfluxDB</span>
-              <span class="tech-tag">Leaflet Maps</span>
-            </div>
-            <button class="btn btn-primary launch-demo-btn" data-demo="agri">Lancer la Démo</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Technical Expertise Section -->
-  <section class="section" id="expertise">
-    <div class="container expertise-layout">
-      <!-- Left side text & skill bars -->
-      <div class="expertise-left fade-in-up">
-        <span class="tag" style="background-color: var(--color-accent-light); color: var(--color-accent);">Compétences</span>
-        <h3>Une ingénierie logicielle robuste et éprouvée</h3>
-        <p>
-          Au-delà de l'interface utilisateur, le succès d'un ERP réside dans sa robustesse système, la fiabilité de ses transactions de base de données et l'automatisation intelligente des flux de données complexes.
-        </p>
-        <div class="skills-list">
-          <div class="skill-bar-container">
-            <div class="skill-header">
-              <span>Architecture de base de données (PostgreSQL, TimescaleDB, Indexation)</span>
-              <span>95%</span>
-            </div>
-            <div class="skill-track">
-              <div class="skill-fill" data-percentage="95"></div>
-            </div>
-          </div>
-
-          <div class="skill-bar-container">
-            <div class="skill-header">
-              <span>Sécurisation & Intégration API (OAuth, Webhooks, WebSockets)</span>
-              <span>90%</span>
-            </div>
-            <div class="skill-track">
-              <div class="skill-fill" data-percentage="90"></div>
-            </div>
-          </div>
-
-          <div class="skill-bar-container">
-            <div class="skill-header">
-              <span>Intégrations IoT & Algorithmes (Reconnaissance, MQTT)</span>
-              <span>85%</span>
-            </div>
-            <div class="skill-track">
-              <div class="skill-fill" data-percentage="85"></div>
-            </div>
-          </div>
-
-          <div class="skill-bar-container">
-            <div class="skill-header">
-              <span>Automatisation & Web Scraping (Workers asynchrones, Queues)</span>
-              <span>92%</span>
-            </div>
-            <div class="skill-track">
-              <div class="skill-fill" data-percentage="92"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Right side flowchart visual -->
-      <div class="expertise-right fade-in-up" style="transition-delay: 0.2s;">
-        <div class="architecture-panel">
-          <div class="arch-header">
-            <h4>Architecture Systèmes Distribués</h4>
-            <p>Conception haute performance mise en œuvre pour nos ERP.</p>
-          </div>
-          <div class="arch-flow">
-            <div class="arch-node">
-              <div class="node-icon">🌐</div>
-              <div class="node-details">
-                <h5>Couche Présentation</h5>
-                <p>Client SPA réactif & PWA avec WebSocket en temps réel</p>
-              </div>
-            </div>
-            <div class="arch-node">
-              <div class="node-icon">⚙️</div>
-              <div class="node-details">
-                <h5>API Gateway & Microservices</h5>
-                <p>Validation, routage dynamique, files d'attente (Redis / BullMQ)</p>
-              </div>
-            </div>
-            <div class="arch-node">
-              <div class="node-icon">🗳️</div>
-              <div class="node-details">
-                <h5>Workers d'Automatisation</h5>
-                <p>Scraping de données, traitement d'images (biométrie), rapports PDF</p>
-              </div>
-            </div>
-            <div class="arch-node" style="margin-bottom: 0;">
-              <div class="node-icon">🗄️</div>
-              <div class="node-details">
-                <h5>Stockage Résilient</h5>
-                <p>Cluster PostgreSQL répliqué & données temporelles Influx/Timescale</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact & Request Quote Section -->
-  <section class="section" style="border-top: 1px solid var(--color-border);" id="contact">
-    <div class="container contact-layout">
-      <!-- Left side copy -->
-      <div class="contact-info fade-in-up">
-        <h3>Un besoin d'automatisation sur-mesure ?</h3>
-        <p>
-          Discutons de vos besoins métiers. Que ce soit pour une extension de nos solutions existantes ou la conception d'un système informatique de zéro, nous créons des outils adaptés à votre réalité terrain.
-        </p>
-        <div class="contact-details">
-          <div class="contact-item">
-            <div class="contact-item-icon">📧</div>
-            <div class="contact-item-text">
-              <h4>Email Professionnel</h4>
-              <p>contact@reda.systems</p>
-            </div>
-          </div>
-          <div class="contact-item">
-            <div class="contact-item-icon">📍</div>
-            <div class="contact-item-text">
-              <h4>Localisation</h4>
-              <p>Casablanca / Agadir - Disponibilité Internationale</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Right side B2B Form card -->
-      <div class="contact-card fade-in-up" style="transition-delay: 0.15s;">
-        <!-- Form structure -->
-        <form id="b2b-contact-form" onsubmit="return false;">
-          <div class="form-row">
-            <div class="form-group">
-              <label for="contact-name">Nom complet</label>
-              <input type="text" id="contact-name" placeholder="Ex: Jean Dupont" required>
-            </div>
-            <div class="form-group">
-              <label for="contact-company">Entreprise</label>
-              <input type="text" id="contact-company" placeholder="Ex: Acme Corp" required>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="contact-email">Email professionnel</label>
-            <input type="email" id="contact-email" placeholder="nom@entreprise.com" required>
-          </div>
-          <div class="form-group">
-            <label for="contact-sector">Votre secteur d'activité</label>
-            <select id="contact-sector" required>
-              <option value="" disabled selected>Sélectionner un secteur</option>
-              <option value="maritime">Pêche & Maritime</option>
-              <option value="pharma">Informatique Pharmaceutique</option>
-              <option value="rental">Location de Véhicules</option>
-              <option value="agriculture">Agriculture Connectée</option>
-              <option value="other">Autre Industrie</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="contact-message">Description de votre besoin</label>
-            <textarea id="contact-message" placeholder="Détaillez vos besoins d'automatisation ou d'ERP..." required></textarea>
-          </div>
-          <button type="submit" class="btn btn-primary" id="btn-submit-contact">Envoyer ma demande</button>
-        </form>
-
-        <!-- Success overlay -->
-        <div class="form-success-message" id="form-success">
-          <div class="success-icon-wrapper">✓</div>
-          <h4>Demande reçue !</h4>
-          <p>Merci pour votre intérêt. Reda analysera vos spécifications et reviendra vers vous sous 48h ouvrées.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-layout">
-        <div class="footer-brand">
-          <div class="logo" style="color: #ffffff; margin-bottom: 20px;">
-            <div class="logo-icon">R</div>
-            <span>Reda<span class="logo-tech">.systems</span></span>
-          </div>
-          <p>Ingénierie de solutions de gestion d'entreprise, traçabilité IoT et automatisation sur-mesure pour industries exigeantes.</p>
-        </div>
-        <div class="footer-col">
-          <h4>Secteurs</h4>
-          <ul>
-            <li><a href="#secteurs">Pêche & Maritime</a></li>
-            <li><a href="#secteurs">Pharma</a></li>
-            <li><a href="#secteurs">Location Flotte</a></li>
-            <li><a href="#secteurs">Agriculture</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Démos</h4>
-          <ul>
-            <li><a href="#demos">ELABBAR Suite</a></li>
-            <li><a href="#demos">PharmaTrack Pro</a></li>
-            <li><a href="#demos">GT Location ERP</a></li>
-            <li><a href="#demos">AgriFlow Monitor</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Ressources</h4>
-          <ul>
-            <li><a href="#">Mentions Légales</a></li>
-            <li><a href="#">Politique de Confidentialité</a></li>
-            <li><a href="#contact">Contact Direct</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <span>&copy; 2026 Reda.systems. Tous droits réservés.</span>
-        <span>Conçu pour l'excellence opérationnelle.</span>
-      </div>
-    </div>
-  </footer>
-
-  <!-- ========================================== -->
-  <!-- MODAL / INTERACTIVE DASHBOARD SIMULATOR    -->
-  <!-- ========================================== -->
-  <div class="modal-overlay" id="sim-modal">
-    <div class="modal-container">
-      
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <div class="modal-title-area">
-          <div class="logo-icon" style="width: 24px; height: 24px; font-size: 13px; border-radius: 4px;">R</div>
-          <h3 id="modal-project-title">Projet ERP</h3>
-        </div>
-        <button class="modal-close" id="modal-close-btn" aria-label="Fermer le simulateur">&times;</button>
-      </div>
-
-      <!-- Modal Body (The Simulator layout) -->
-      <div class="modal-body" style="position: relative;">
-        
-        <!-- Gate Overlay (Lead Magnet form) -->
-        <div class="modal-gate" id="modal-gate">
-          <div class="gate-content">
-            <div class="gate-icon">🔒</div>
-            <h4>Déverrouiller le Hub Démos</h4>
-            <p>Saisissez vos informations pour accéder en illimité aux simulateurs interactifs de Reda et tester l'ensemble des ERP.</p>
             
-            <form id="gate-form" onsubmit="return false;" class="gate-form">
-              <div class="form-group">
-                <label for="gate-name">Votre Nom</label>
-                <input type="text" id="gate-name" placeholder="Ex: Marc Lemaire" required>
-              </div>
-              <div class="form-group">
-                <label for="gate-email">Email professionnel</label>
-                <input type="email" id="gate-email" placeholder="nom@entreprise.com" required>
-              </div>
-              <div class="form-group">
-                <label for="gate-company">Entreprise</label>
-                <input type="text" id="gate-company" placeholder="Ex: LogiTrans" required>
-              </div>
-              <button type="submit" class="btn btn-primary" id="btn-submit-gate">Déverrouiller et Tester</button>
-            </form>
-          </div>
-        </div>
+            <nav class="sidebar-menu">
+                <button class="menu-item active" data-tab="dashboard">
+                    <i data-lucide="layout-dashboard"></i>
+                    <span>Tableau de bord</span>
+                </button>
+                <button class="menu-item" data-tab="receptions">
+                    <i data-lucide="package-open"></i>
+                    <span>Lots & Réceptions</span>
+                </button>
+                <button class="menu-item" data-tab="tri">
+                    <i data-lucide="layers"></i>
+                    <span>Lignes de Tri</span>
+                </button>
+                <button class="menu-item" data-tab="expeditions">
+                    <i data-lucide="truck"></i>
+                    <span>Expéditions (UE)</span>
+                </button>
+                <button class="menu-item" data-tab="costs">
+                    <i data-lucide="calculator"></i>
+                    <span>Coût de Revient</span>
+                </button>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <div class="avatar">DG</div>
+                    <div class="user-info">
+                        <span class="user-name">Hamza</span>
+                        <span class="user-role">Contrôleur de Gestion</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
 
-        <!-- Simulator Application -->
-        <div class="simulator-layout">
-          <!-- Simulator Sidebar Navigation -->
-          <div class="sim-sidebar" id="sim-sidebar">
-            <button class="sim-sidebar-btn active" data-tab="dashboard">
-              <span>📊</span> Tableau de Bord
-            </button>
-            <button class="sim-sidebar-btn" data-tab="action">
-              <span>⚡</span> Outils Interactifs
-            </button>
-            <button class="sim-sidebar-btn" data-tab="logs">
-              <span>📋</span> Journaux Système
-            </button>
-          </div>
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Topbar -->
+            <header class="topbar">
+                <div class="page-title">
+                    <h1 id="page-main-title">Tableau de bord de pilotage</h1>
+                    <p class="subtitle" id="page-subtitle">Suivi en temps réel des lots de fruits & légumes destinés à l'Europe</p>
+                </div>
+                <div class="topbar-actions">
+                    <button class="btn btn-primary" id="btn-new-lot">
+                        <i data-lucide="plus"></i>
+                        <span>Nouvelle Réception</span>
+                    </button>
+                </div>
+            </header>
 
-          <!-- Simulator Dynamic Content Area -->
-          <div class="sim-content-area" id="sim-content-area">
-            <!-- Content gets loaded dynamically by app.js based on active project and active sidebar tab -->
-          </div>
-        </div>
+            <!-- Dynamic Views Container -->
+            <div class="views-wrapper">
+                
+                <!-- ==================== VIEW 1: DASHBOARD ==================== -->
+                <section class="view-section active" id="view-dashboard">
+                    <div class="dashboard-grid">
+                        <!-- KPI Cards -->
+                        <div class="kpi-card">
+                            <div class="kpi-icon-wrapper color-green">
+                                <i data-lucide="trending-up"></i>
+                            </div>
+                            <div class="kpi-data">
+                                <span class="kpi-title">Rendement Tri (Pack-out)</span>
+                                <h3 class="kpi-value" id="kpi-yield">79.5%</h3>
+                                <span class="kpi-trend trend-positive">Optimal (Cible > 75%)</span>
+                            </div>
+                        </div>
 
-      </div>
+                        <div class="kpi-card">
+                            <div class="kpi-icon-wrapper color-blue">
+                                <i data-lucide="package"></i>
+                            </div>
+                            <div class="kpi-data">
+                                <span class="kpi-title">Coût Emballage Moyen</span>
+                                <h3 class="kpi-value" id="kpi-packing">0.38 €<span class="unit">/kg</span></h3>
+                                <span class="kpi-trend trend-stable">Dans la cible budgétaire</span>
+                            </div>
+                        </div>
+
+                        <div class="kpi-card">
+                            <div class="kpi-icon-wrapper color-purple">
+                                <i data-lucide="ship"></i>
+                            </div>
+                            <div class="kpi-data">
+                                <span class="kpi-title">Fret & Logistique Moyen</span>
+                                <h3 class="kpi-value" id="kpi-logistics">0.78 €<span class="unit">/kg</span></h3>
+                                <span class="kpi-trend trend-negative"><i data-lucide="alert-triangle"></i> Fret maritime en hausse</span>
+                            </div>
+                        </div>
+
+                        <div class="kpi-card">
+                            <div class="kpi-icon-wrapper color-orange">
+                                <i data-lucide="dollar-sign"></i>
+                            </div>
+                            <div class="kpi-data">
+                                <span class="kpi-title">Coût de Revient Moyen</span>
+                                <h3 class="kpi-value" id="kpi-cost-price">1.96 €<span class="unit">/kg</span></h3>
+                                <span class="kpi-trend trend-positive">Marge préservée</span>
+                            </div>
+                        </div>
+
+                        <!-- Simulator Card -->
+                        <div class="card col-span-3 simulator-card">
+                            <div class="card-header">
+                                <h2>Simulateur Dynamique de Coût de Revient par Lot</h2>
+                                <span class="badge badge-interactive">Simulation interactive</span>
+                            </div>
+                            <div class="card-body simulator-container">
+                                <div class="simulator-controls">
+                                    <div class="form-group">
+                                        <label for="sim-input-weight">Quantité de Fruit Brut Réceptionné (Kg)</label>
+                                        <input type="number" id="sim-input-weight" value="10000" step="500">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sim-purchase-price">Prix d'Achat Agriculteur (EUR/Kg)</label>
+                                        <input type="number" id="sim-purchase-price" value="0.80" step="0.05" min="0.10">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sim-waste-rate">Taux d'Écart au Tri (%) - Perte</label>
+                                        <div class="slider-wrapper">
+                                            <input type="range" id="sim-waste-rate" min="5" max="45" value="20">
+                                            <span id="waste-val">20%</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sim-packing-cost">Emballage & Consommables (EUR/Kg)</label>
+                                        <input type="number" id="sim-packing-cost" value="0.38" step="0.02" min="0.10">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sim-labor-cost">Main d'Œuvre Ligne (EUR/Heure)</label>
+                                        <input type="number" id="sim-labor-cost" value="15.00" step="1">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="sim-freight-cost">Fret Maritime & Logistique (EUR/Kg Export)</label>
+                                        <input type="number" id="sim-freight-cost" value="0.75" step="0.05" min="0.10">
+                                    </div>
+                                </div>
+                                <div class="simulator-results">
+                                    <div class="result-kpis">
+                                        <div class="mini-kpi">
+                                            <span class="label">Poids Final Exporté</span>
+                                            <span class="value" id="res-export-weight">8 000 kg</span>
+                                        </div>
+                                        <div class="mini-kpi">
+                                            <span class="label">Rendement Matière</span>
+                                            <span class="value" id="res-yield">80%</span>
+                                        </div>
+                                    </div>
+                                    <div class="chart-wrapper">
+                                        <canvas id="costBreakdownChart"></canvas>
+                                    </div>
+                                    <div class="cost-summary">
+                                        <div class="summary-line highlight">
+                                            <span>Coût de Revient Réel (Kg Exporté) :</span>
+                                            <span id="res-total-cost-kg">1.89 €/kg</span>
+                                        </div>
+                                        <div class="summary-line">
+                                            <span>Coût Total du Lot :</span>
+                                            <span id="res-total-lot-cost">15 120.00 €</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- System Logs Activity Feed -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>Journaux d'Activité de la Station</h2>
+                            </div>
+                            <div class="card-body">
+                                <div class="logs-feed" id="station-logs-feed">
+                                    <!-- Dynamic logs -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ==================== VIEW 2: RECEPTIONS ==================== -->
+                <section class="view-section" id="view-receptions">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Registre des Apports & Matières Premières</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table" id="receptions-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Code Lot</th>
+                                            <th>Date Réception</th>
+                                            <th>Produit</th>
+                                            <th>Fournisseur</th>
+                                            <th>Poids Brut Reçu</th>
+                                            <th>Prix d'Achat</th>
+                                            <th>Qualité Agréage</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Dynamic content -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ==================== VIEW 3: TRI (LIGNES DE TRI) ==================== -->
+                <section class="view-section" id="view-tri">
+                    <div class="grid-two-cols">
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>Rendement de Conditionnement & Écarts de Tri</h2>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table" id="tri-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Code Lot</th>
+                                                <th>Produit</th>
+                                                <th>Poids Brut</th>
+                                                <th>Écart de Tri (Kg)</th>
+                                                <th>Rendement (Pack-out)</th>
+                                                <th>Main d'Œuvre Ligne</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Dynamic content -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>Répartition de l'Écart de Tri Global</h2>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-wrapper pie-chart-wrapper">
+                                    <canvas id="wasteDistributionChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ==================== VIEW 4: EXPEDITIONS ==================== -->
+                <section class="view-section" id="view-expeditions">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Registre des Expéditions vers l'Europe</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table" id="expeditions-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Code Lot</th>
+                                            <th>Destination</th>
+                                            <th>Poids Net Exporté</th>
+                                            <th>Fret & Logistique (€)</th>
+                                            <th>Coût Transit & Douane</th>
+                                            <th>Statut Expédition</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Dynamic content -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ==================== VIEW 5: COSTS (COÛT DE REVIENT) ==================== -->
+                <section class="view-section" id="view-costs">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Bilan Financier & Coût de Revient par Lot</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table" id="costs-summary-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Code Lot</th>
+                                            <th>Matière Première (€)</th>
+                                            <th>Pertes Tri (€)</th>
+                                            <th>Emballage & MO (€)</th>
+                                            <th>Logistique Export (€)</th>
+                                            <th>Coût de Revient Global</th>
+                                            <th>Marge Estimée</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Dynamic content -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
     </div>
-  </div>
 
-  <script src="app.js"></script>
+    <!-- Modal Nouveau Lot -->
+    <div class="modal" id="modal-lot">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Créer un Nouveau Lot de Réception</h2>
+                <button class="btn-close" id="btn-close-modal"><i data-lucide="x"></i></button>
+            </div>
+            <form id="form-new-lot">
+                <div class="form-group">
+                    <label for="lot-product">Type de Fruit / Légume</label>
+                    <select id="lot-product" required>
+                        <option value="Tomate Cerise">Tomate Cerise</option>
+                        <option value="Haricot Vert">Haricot Vert</option>
+                        <option value="Agrumes (Clémentines)">Agrumes (Clémentines)</option>
+                        <option value="Courgettes">Courgettes</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="lot-weight">Poids Brut Reçu (Kg)</label>
+                    <input type="number" id="lot-weight" value="5000" required>
+                </div>
+                <div class="form-group">
+                    <label for="lot-price">Prix Achat convenu (€/Kg)</label>
+                    <input type="number" id="lot-price" value="0.75" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="lot-supplier">Fournisseur / Coopérative</label>
+                    <input type="text" id="lot-supplier" placeholder="Ex: Coopérative Souss" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="btn-cancel-modal">Annuler</button>
+                    <button type="submit" class="btn btn-primary">Enregistrer le Lot</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
 </body>
 </html>
