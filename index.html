@@ -1,378 +1,371 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agrico-Tech ERP | Gestion & Contrôle des Coûts Industriels</title>
+    <title>Agrico-Tech ERP - Logiciel de Gestion Agricole & Export Europe</title>
+    <meta name="description" content="Contrôlez et maîtrisez vos coûts de reconditionnement de fruits et légumes. Agrico-Tech ERP centralise le suivi des lots, le rendement de tri et la logistique d'exportation vers l'Europe.">
+    
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        farm: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            200: '#a7f3d0',
+                            300: '#6ee7b7',
+                            400: '#34d399',
+                            500: '#10B981', // Émeraude Agricole
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065f46',
+                            900: '#064e3b', // Vert Sombre Forêt
+                        },
+                        soft: '#F8FAFC',
+                        success: '#10B981',
+                        warning: '#F5A623',
+                        danger: '#FF4D4F',
+                        info: '#3B82F6',
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 40px -10px rgba(6, 78, 59, 0.08)',
+                        'float': '0 20px 40px -20px rgba(16, 185, 129, 0.15)',
+                        'glass': '0 8px 32px 0 rgba(6, 78, 59, 0.05)',
+                    },
+                    backgroundImage: {
+                        'gradient-primary': 'linear-gradient(135deg, #10B981 0%, #064e3b 100%)',
+                        'gradient-farm': 'linear-gradient(180deg, rgba(248,250,252,0) 0%, rgba(209,250,229,0.3) 100%)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #F8FAFC;
+            color: #334155;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(229, 234, 242, 0.6);
+        }
+
+        .hero-pattern {
+            background-image: radial-gradient(#10B981 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: 0.05;
+        }
+
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -20px rgba(16, 185, 129, 0.15);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+            box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+            background: linear-gradient(135deg, #34d399 0%, #10B981 100%);
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #064e3b 0%, #10B981 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Animations */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-up {
+            animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+        }
+        
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+        .delay-400 { animation-delay: 400ms; }
+    </style>
 </head>
-<body>
-    <div class="app-container">
-        <!-- Sidebar Navigation -->
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <div class="logo-container">
-                    <i data-lucide="sprout" class="logo-icon"></i>
-                    <span class="logo-text">Agrico<span>Tech</span></span>
-                </div>
-                <span class="badge-status">Export EU</span>
-            </div>
-            
-            <nav class="sidebar-menu">
-                <button class="menu-item active" data-tab="dashboard">
-                    <i data-lucide="layout-dashboard"></i>
-                    <span>Tableau de bord</span>
-                </button>
-                <button class="menu-item" data-tab="receptions">
-                    <i data-lucide="package-open"></i>
-                    <span>Lots & Réceptions</span>
-                </button>
-                <button class="menu-item" data-tab="tri">
-                    <i data-lucide="layers"></i>
-                    <span>Lignes de Tri</span>
-                </button>
-                <button class="menu-item" data-tab="expeditions">
-                    <i data-lucide="truck"></i>
-                    <span>Expéditions (UE)</span>
-                </button>
-                <button class="menu-item" data-tab="costs">
-                    <i data-lucide="calculator"></i>
-                    <span>Coût de Revient</span>
-                </button>
-            </nav>
-            
-            <div class="sidebar-footer">
-                <div class="user-profile">
-                    <div class="avatar">DG</div>
-                    <div class="user-info">
-                        <span class="user-name">Hamza</span>
-                        <span class="user-role">Contrôleur de Gestion</span>
+<body class="relative overflow-x-hidden selection:bg-farm-500 selection:text-white">
+
+    <!-- Background Pattern -->
+    <div class="fixed inset-0 z-[-1] hero-pattern"></div>
+    <div class="fixed inset-0 z-[-1] bg-gradient-farm"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-primary flex items-center justify-center shadow-lg">
+                        <span class="material-symbols-outlined text-white text-2xl">sprout</span>
+                    </div>
+                    <div>
+                        <h1 class="font-display font-bold text-xl text-farm-900 leading-none tracking-tight">AGRICO TECH</h1>
+                        <span class="text-[10px] font-semibold text-farm-500 tracking-widest uppercase">ERP System</span>
                     </div>
                 </div>
-            </div>
-        </aside>
 
-        <!-- Main Content Area -->
-        <main class="main-content">
-            <!-- Topbar -->
-            <header class="topbar">
-                <div class="page-title">
-                    <h1 id="page-main-title">Tableau de bord de pilotage</h1>
-                    <p class="subtitle" id="page-subtitle">Suivi en temps réel des lots de fruits & légumes destinés à l'Europe</p>
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#features" class="text-sm font-medium text-slate-600 hover:text-farm-500 transition-colors">Fonctionnalités</a>
+                    <a href="#modules" class="text-sm font-medium text-slate-600 hover:text-farm-500 transition-colors">Modules</a>
+                    <a href="#analytics" class="text-sm font-medium text-slate-600 hover:text-farm-500 transition-colors">Analytiques</a>
                 </div>
-                <div class="topbar-actions">
-                    <button class="btn btn-primary" id="btn-new-lot">
-                        <i data-lucide="plus"></i>
-                        <span>Nouvelle Réception</span>
+
+                <!-- Auth Buttons -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="app.html" class="text-sm font-medium text-slate-600 hover:text-farm-900 transition-colors">Se connecter</a>
+                    <a href="app.html" class="btn-primary text-white px-6 py-2.5 rounded-full text-sm font-semibold tracking-wide">
+                        Lancer l'ERP
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-slate-600 hover:text-farm-900 focus:outline-none p-2">
+                        <span class="material-symbols-outlined text-2xl">menu</span>
                     </button>
                 </div>
-            </header>
-
-            <!-- Dynamic Views Container -->
-            <div class="views-wrapper">
-                
-                <!-- ==================== VIEW 1: DASHBOARD ==================== -->
-                <section class="view-section active" id="view-dashboard">
-                    <div class="dashboard-grid">
-                        <!-- KPI Cards -->
-                        <div class="kpi-card">
-                            <div class="kpi-icon-wrapper color-green">
-                                <i data-lucide="trending-up"></i>
-                            </div>
-                            <div class="kpi-data">
-                                <span class="kpi-title">Rendement Tri (Pack-out)</span>
-                                <h3 class="kpi-value" id="kpi-yield">79.5%</h3>
-                                <span class="kpi-trend trend-positive">Optimal (Cible > 75%)</span>
-                            </div>
-                        </div>
-
-                        <div class="kpi-card">
-                            <div class="kpi-icon-wrapper color-blue">
-                                <i data-lucide="package"></i>
-                            </div>
-                            <div class="kpi-data">
-                                <span class="kpi-title">Coût Emballage Moyen</span>
-                                <h3 class="kpi-value" id="kpi-packing">0.38 €<span class="unit">/kg</span></h3>
-                                <span class="kpi-trend trend-stable">Dans la cible budgétaire</span>
-                            </div>
-                        </div>
-
-                        <div class="kpi-card">
-                            <div class="kpi-icon-wrapper color-purple">
-                                <i data-lucide="ship"></i>
-                            </div>
-                            <div class="kpi-data">
-                                <span class="kpi-title">Fret & Logistique Moyen</span>
-                                <h3 class="kpi-value" id="kpi-logistics">0.78 €<span class="unit">/kg</span></h3>
-                                <span class="kpi-trend trend-negative"><i data-lucide="alert-triangle"></i> Fret maritime en hausse</span>
-                            </div>
-                        </div>
-
-                        <div class="kpi-card">
-                            <div class="kpi-icon-wrapper color-orange">
-                                <i data-lucide="dollar-sign"></i>
-                            </div>
-                            <div class="kpi-data">
-                                <span class="kpi-title">Coût de Revient Moyen</span>
-                                <h3 class="kpi-value" id="kpi-cost-price">1.96 €<span class="unit">/kg</span></h3>
-                                <span class="kpi-trend trend-positive">Marge préservée</span>
-                            </div>
-                        </div>
-
-                        <!-- Simulator Card -->
-                        <div class="card col-span-3 simulator-card">
-                            <div class="card-header">
-                                <h2>Simulateur Dynamique de Coût de Revient par Lot</h2>
-                                <span class="badge badge-interactive">Simulation interactive</span>
-                            </div>
-                            <div class="card-body simulator-container">
-                                <div class="simulator-controls">
-                                    <div class="form-group">
-                                        <label for="sim-input-weight">Quantité de Fruit Brut Réceptionné (Kg)</label>
-                                        <input type="number" id="sim-input-weight" value="10000" step="500">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sim-purchase-price">Prix d'Achat Agriculteur (EUR/Kg)</label>
-                                        <input type="number" id="sim-purchase-price" value="0.80" step="0.05" min="0.10">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sim-waste-rate">Taux d'Écart au Tri (%) - Perte</label>
-                                        <div class="slider-wrapper">
-                                            <input type="range" id="sim-waste-rate" min="5" max="45" value="20">
-                                            <span id="waste-val">20%</span>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sim-packing-cost">Emballage & Consommables (EUR/Kg)</label>
-                                        <input type="number" id="sim-packing-cost" value="0.38" step="0.02" min="0.10">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sim-labor-cost">Main d'Œuvre Ligne (EUR/Heure)</label>
-                                        <input type="number" id="sim-labor-cost" value="15.00" step="1">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="sim-freight-cost">Fret Maritime & Logistique (EUR/Kg Export)</label>
-                                        <input type="number" id="sim-freight-cost" value="0.75" step="0.05" min="0.10">
-                                    </div>
-                                </div>
-                                <div class="simulator-results">
-                                    <div class="result-kpis">
-                                        <div class="mini-kpi">
-                                            <span class="label">Poids Final Exporté</span>
-                                            <span class="value" id="res-export-weight">8 000 kg</span>
-                                        </div>
-                                        <div class="mini-kpi">
-                                            <span class="label">Rendement Matière</span>
-                                            <span class="value" id="res-yield">80%</span>
-                                        </div>
-                                    </div>
-                                    <div class="chart-wrapper">
-                                        <canvas id="costBreakdownChart"></canvas>
-                                    </div>
-                                    <div class="cost-summary">
-                                        <div class="summary-line highlight">
-                                            <span>Coût de Revient Réel (Kg Exporté) :</span>
-                                            <span id="res-total-cost-kg">1.89 €/kg</span>
-                                        </div>
-                                        <div class="summary-line">
-                                            <span>Coût Total du Lot :</span>
-                                            <span id="res-total-lot-cost">15 120.00 €</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- System Logs Activity Feed -->
-                        <div class="card">
-                            <div class="card-header">
-                                <h2>Journaux d'Activité de la Station</h2>
-                            </div>
-                            <div class="card-body">
-                                <div class="logs-feed" id="station-logs-feed">
-                                    <!-- Dynamic logs -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- ==================== VIEW 2: RECEPTIONS ==================== -->
-                <section class="view-section" id="view-receptions">
-                    <div class="card">
-                        <div class="card-header">
-                            <h2>Registre des Apports & Matières Premières</h2>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table" id="receptions-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Code Lot</th>
-                                            <th>Date Réception</th>
-                                            <th>Produit</th>
-                                            <th>Fournisseur</th>
-                                            <th>Poids Brut Reçu</th>
-                                            <th>Prix d'Achat</th>
-                                            <th>Qualité Agréage</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <!-- Dynamic content -->
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- ==================== VIEW 3: TRI (LIGNES DE TRI) ==================== -->
-                <section class="view-section" id="view-tri">
-                    <div class="grid-two-cols">
-                        <div class="card">
-                            <div class="card-header">
-                                <h2>Rendement de Conditionnement & Écarts de Tri</h2>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table" id="tri-table">
-                                        <thead>
-                                            <tr>
-                                                <th>Code Lot</th>
-                                                <th>Produit</th>
-                                                <th>Poids Brut</th>
-                                                <th>Écart de Tri (Kg)</th>
-                                                <th>Rendement (Pack-out)</th>
-                                                <th>Main d'Œuvre Ligne</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <!-- Dynamic content -->
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="card">
-                            <div class="card-header">
-                                <h2>Répartition de l'Écart de Tri Global</h2>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart-wrapper pie-chart-wrapper">
-                                    <canvas id="wasteDistributionChart"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- ==================== VIEW 4: EXPEDITIONS ==================== -->
-                <section class="view-section" id="view-expeditions">
-                    <div class="card">
-                        <div class="card-header">
-                            <h2>Registre des Expéditions vers l'Europe</h2>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table" id="expeditions-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Code Lot</th>
-                                            <th>Destination</th>
-                                            <th>Poids Net Exporté</th>
-                                            <th>Fret & Logistique (€)</th>
-                                            <th>Coût Transit & Douane</th>
-                                            <th>Statut Expédition</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <!-- Dynamic content -->
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- ==================== VIEW 5: COSTS (COÛT DE REVIENT) ==================== -->
-                <section class="view-section" id="view-costs">
-                    <div class="card">
-                        <div class="card-header">
-                            <h2>Bilan Financier & Coût de Revient par Lot</h2>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table" id="costs-summary-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Code Lot</th>
-                                            <th>Matière Première (€)</th>
-                                            <th>Pertes Tri (€)</th>
-                                            <th>Emballage & MO (€)</th>
-                                            <th>Logistique Export (€)</th>
-                                            <th>Coût de Revient Global</th>
-                                            <th>Marge Estimée</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <!-- Dynamic content -->
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
             </div>
-        </main>
-    </div>
-
-    <!-- Modal Nouveau Lot -->
-    <div class="modal" id="modal-lot">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Créer un Nouveau Lot de Réception</h2>
-                <button class="btn-close" id="btn-close-modal"><i data-lucide="x"></i></button>
-            </div>
-            <form id="form-new-lot">
-                <div class="form-group">
-                    <label for="lot-product">Type de Fruit / Légume</label>
-                    <select id="lot-product" required>
-                        <option value="Tomate Cerise">Tomate Cerise</option>
-                        <option value="Haricot Vert">Haricot Vert</option>
-                        <option value="Agrumes (Clémentines)">Agrumes (Clémentines)</option>
-                        <option value="Courgettes">Courgettes</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="lot-weight">Poids Brut Reçu (Kg)</label>
-                    <input type="number" id="lot-weight" value="5000" required>
-                </div>
-                <div class="form-group">
-                    <label for="lot-price">Prix Achat convenu (€/Kg)</label>
-                    <input type="number" id="lot-price" value="0.75" step="0.01" required>
-                </div>
-                <div class="form-group">
-                    <label for="lot-supplier">Fournisseur / Coopérative</label>
-                    <input type="text" id="lot-supplier" placeholder="Ex: Coopérative Souss" required>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" id="btn-cancel-modal">Annuler</button>
-                    <button type="submit" class="btn btn-primary">Enregistrer le Lot</button>
-                </div>
-            </form>
         </div>
-    </div>
+    </nav>
 
-    <script src="app.js"></script>
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="pt-32 pb-20 lg:pt-48 lg:pb-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative">
+            <div class="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+                <!-- Text Content -->
+                <div class="max-w-2xl animate-fade-up">
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-farm-50 border border-farm-100 text-farm-600 text-xs font-semibold uppercase tracking-wider mb-6 shadow-sm">
+                        <span class="material-symbols-outlined text-[16px]">verified</span>
+                        ERP de conditionnement & export européen
+                    </div>
+                    <h1 class="font-display text-5xl lg:text-6xl font-extrabold text-farm-900 leading-[1.1] tracking-tight mb-6">
+                        Gérez toute votre activité agricole, <span class="text-gradient">simplement.</span>
+                    </h1>
+                    <p class="text-lg text-slate-500 mb-10 leading-relaxed font-normal max-w-lg">
+                        Agrico-Tech ERP centralise et optimise la gestion de vos lots de fruits & légumes, vos lignes de tri, vos coûts d'emballage et de logistique vers l'Europe.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="app.html" class="btn-primary text-white px-8 py-4 rounded-full text-base font-semibold flex items-center justify-center gap-2 w-full sm:w-auto">
+                            Ouvrir Agrico-Tech ERP
+                            <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+                        </a>
+                        <a href="#features" class="bg-white text-farm-900 border border-slate-200 hover:border-farm-200 hover:bg-farm-50 px-8 py-4 rounded-full text-base font-semibold transition-all flex items-center justify-center gap-2 shadow-sm w-full sm:w-auto">
+                            <span class="material-symbols-outlined text-[20px] text-farm-500">visibility</span>
+                            Découvrir les Fonctionnalités
+                        </a>
+                    </div>
+                    
+                    <!-- Social Proof -->
+                    <div class="mt-12 pt-8 border-t border-slate-200/60 flex items-center gap-8">
+                        <div>
+                            <p class="text-3xl font-display font-bold text-farm-900">450+</p>
+                            <p class="text-sm text-slate-500 font-medium">Lots exportés</p>
+                        </div>
+                        <div class="w-px h-12 bg-slate-200/60"></div>
+                        <div>
+                            <p class="text-3xl font-display font-bold text-farm-900">3.4k</p>
+                            <p class="text-sm text-slate-500 font-medium">Tonnes triées</p>
+                        </div>
+                        <div class="w-px h-12 bg-slate-200/60"></div>
+                        <div>
+                            <p class="text-3xl font-display font-bold text-farm-900">100%</p>
+                            <p class="text-sm text-slate-500 font-medium">Conformité UE</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Visual Content / Mockup -->
+                <div class="relative lg:ml-auto animate-fade-up delay-200">
+                    <div class="relative rounded-2xl overflow-hidden shadow-float bg-white border border-slate-100/50 p-2">
+                        <!-- Mac OS window dots -->
+                        <div class="flex gap-1.5 px-3 py-2 border-b border-slate-50">
+                            <div class="w-2.5 h-2.5 rounded-full bg-slate-200"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-slate-200"></div>
+                            <div class="w-2.5 h-2.5 rounded-full bg-slate-200"></div>
+                        </div>
+                        <!-- UI Preview Image -->
+                        <img src="https://images.unsplash.com/photo-1595855759920-86582396756a?q=80&w=2070&auto=format&fit=crop" alt="Agrico-Tech ERP Dashboard Interface" class="w-full h-auto rounded-xl object-cover object-center max-h-[400px] opacity-90">
+                        
+                        <!-- Floating Glass Card -->
+                        <div class="absolute -bottom-6 -left-6 bg-white/90 backdrop-blur-md border border-white/40 p-4 rounded-xl shadow-soft flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-success/10 flex items-center justify-center">
+                                <span class="material-symbols-outlined text-success">trending_up</span>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-500 font-medium mb-0.5">Rendement Tri Moyen</p>
+                                <p class="text-lg font-bold text-farm-900">79.5% <span class="text-sm font-medium text-slate-400">Pack-out</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Grid -->
+        <section id="features" class="py-20 bg-white/50 border-y border-slate-100">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16 animate-fade-up">
+                    <h2 class="font-display text-3xl md:text-4xl font-bold text-farm-900 mb-4">Des modules pensés pour votre station</h2>
+                    <p class="text-slate-500 text-lg">Contrôlez chaque maillon de la chaîne de reconditionnement avec une traçabilité sans faille.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Feature 1 -->
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 card-hover animate-fade-up delay-100">
+                        <div class="w-12 h-12 rounded-xl bg-farm-50 text-farm-600 flex items-center justify-center mb-6">
+                            <span class="material-symbols-outlined text-2xl">receipt_long</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-farm-900 mb-2">Lots & Agréage</h3>
+                        <p class="text-sm text-slate-500 mb-4 leading-relaxed">Saisissez les réceptions d'apports bruts et évaluez instantanément la qualité.</p>
+                        <a href="app.html" class="inline-flex items-center text-sm font-semibold text-farm-500 hover:text-farm-600 transition-colors">
+                            Ouvrir le module <span class="material-symbols-outlined text-[18px] ml-1">arrow_forward</span>
+                        </a>
+                    </div>
+
+                    <!-- Feature 2 -->
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 card-hover animate-fade-up delay-200">
+                        <div class="w-12 h-12 rounded-xl bg-success/10 text-success flex items-center justify-center mb-6">
+                            <span class="material-symbols-outlined text-2xl">fact_check</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-farm-900 mb-2">Suivi des Pertes</h3>
+                        <p class="text-sm text-slate-500 mb-4 leading-relaxed">Mesurez précisément l'écart de tri pour réajuster le coût matière réel.</p>
+                        <a href="app.html" class="inline-flex items-center text-sm font-semibold text-farm-500 hover:text-farm-600 transition-colors">
+                            Ouvrir le module <span class="material-symbols-outlined text-[18px] ml-1">arrow_forward</span>
+                        </a>
+                    </div>
+
+                    <!-- Feature 3 -->
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 card-hover animate-fade-up delay-300">
+                        <div class="w-12 h-12 rounded-xl bg-warning/10 text-warning flex items-center justify-center mb-6">
+                            <span class="material-symbols-outlined text-2xl">local_shipping</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-farm-900 mb-2">Fret & Logistique</h3>
+                        <p class="text-sm text-slate-500 mb-4 leading-relaxed">Suivez l'acheminement de vos palettes de fruits et légumes vers les hubs européens.</p>
+                        <a href="app.html" class="inline-flex items-center text-sm font-semibold text-farm-500 hover:text-farm-600 transition-colors">
+                            Ouvrir le module <span class="material-symbols-outlined text-[18px] ml-1">arrow_forward</span>
+                        </a>
+                    </div>
+
+                    <!-- Feature 4 -->
+                    <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 card-hover animate-fade-up delay-400">
+                        <div class="w-12 h-12 rounded-xl bg-info/10 text-info flex items-center justify-center mb-6">
+                            <span class="material-symbols-outlined text-2xl">calculate</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-farm-900 mb-2">Coût de Revient</h3>
+                        <p class="text-sm text-slate-500 mb-4 leading-relaxed">Calculez automatiquement votre marge finale par lot exporté (BOM, fret, MO).</p>
+                        <a href="app.html" class="inline-flex items-center text-sm font-semibold text-farm-500 hover:text-farm-600 transition-colors">
+                            Ouvrir le module <span class="material-symbols-outlined text-[18px] ml-1">arrow_forward</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="py-20 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-5xl mx-auto bg-farm-900 rounded-[2rem] p-10 md:p-16 text-center relative overflow-hidden shadow-float">
+                <!-- Background decoration -->
+                <div class="absolute top-0 right-0 -mt-10 -mr-10 w-64 h-64 bg-farm-500 rounded-full mix-blend-multiply filter blur-3xl opacity-50"></div>
+                <div class="absolute bottom-0 left-0 -mb-10 -ml-10 w-64 h-64 bg-emerald-400 rounded-full mix-blend-multiply filter blur-3xl opacity-30"></div>
+                
+                <div class="relative z-10">
+                    <h2 class="font-display text-3xl md:text-5xl font-bold text-white mb-6">Contrôlez vos marges agricoles dès aujourd'hui</h2>
+                    <p class="text-farm-100 text-lg mb-10 max-w-2xl mx-auto">Prenez les bonnes décisions grâce à notre calculateur de rendement en temps réel.</p>
+                    <a href="app.html" class="inline-flex items-center justify-center px-8 py-4 text-base font-bold rounded-full text-farm-900 bg-white hover:bg-slate-50 hover:shadow-xl transition-all gap-2">
+                        Lancer l'Application ERP
+                        <span class="material-symbols-outlined">rocket_launch</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-100 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="flex items-center gap-2 opacity-80">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center">
+                        <span class="material-symbols-outlined text-white text-[18px]">sprout</span>
+                    </div>
+                    <span class="font-display font-bold text-farm-900">AGRICO-TECH ERP</span>
+                </div>
+                <div class="flex gap-6 text-sm text-slate-500 font-medium">
+                    <a href="#" class="hover:text-farm-600">Confidentialité</a>
+                    <a href="#" class="hover:text-farm-600">Conditions</a>
+                    <a href="#" class="hover:text-farm-600">Support Technique</a>
+                </div>
+            </div>
+            <div class="mt-8 text-center text-sm text-slate-400">
+                &copy; 2026 Agrico-Tech ERP. Tous droits réservés.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Intersection Observer for animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-fade-up').forEach((el) => {
+            el.style.animationPlayState = 'paused';
+            observer.observe(el);
+        });
+    </script>
 </body>
 </html>
