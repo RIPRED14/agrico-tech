@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agrico-Tech ERP | Contrôle des Coûts & Conditionnement</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js pour des graphiques modernes -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-container">
+                    <i data-lucide="sprout" class="logo-icon"></i>
+                    <span class="logo-text">Agrico<span>Tech</span></span>
+                </div>
+                <span class="badge-status">Export EU</span>
+            </div>
+            
+            <nav class="sidebar-menu">
+                <a href="#" class="menu-item active">
+                    <i data-lucide="layout-dashboard"></i>
+                    <span>Tableau de bord</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <i data-lucide="package-open"></i>
+                    <span>Lots & Réceptions</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <i data-lucide="layers"></i>
+                    <span>Lignes de Tri</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <i data-lucide="truck"></i>
+                    <span>Expéditions (UE)</span>
+                </a>
+                <a href="#" class="menu-item">
+                    <i data-lucide="calculator"></i>
+                    <span>Coût de Revient</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <div class="avatar">DG</div>
+                    <div class="user-info">
+                        <span class="user-name">Hamza</span>
+                        <span class="user-role">Contrôleur de Gestion</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Topbar -->
+            <header class="topbar">
+                <div class="page-title">
+                    <h1>Maîtrise des Coûts de Conditionnement</h1>
+                    <p class="subtitle">Suivi en temps réel des lots de fruits & légumes destinés à l'Europe</p>
+                </div>
+                <div class="topbar-actions">
+                    <button class="btn btn-primary" id="btn-new-lot">
+                        <i data-lucide="plus"></i>
+                        <span>Nouveau Lot / Apport</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <div class="dashboard-grid">
+                <!-- KPI Cards -->
+                <div class="kpi-card margin-card">
+                    <div class="kpi-icon-wrapper color-green">
+                        <i data-lucide="trending-up"></i>
+                    </div>
+                    <div class="kpi-data">
+                        <span class="kpi-title">Rendement Tri (Pack-out)</span>
+                        <h3 class="kpi-value" id="kpi-yield">78.5%</h3>
+                        <span class="kpi-trend trend-positive">
+                            <i data-lucide="arrow-up-right"></i> +1.2% cette semaine
+                        </span>
+                    </div>
+                </div>
+
+                <div class="kpi-card margin-card">
+                    <div class="kpi-icon-wrapper color-blue">
+                        <i data-lucide="package"></i>
+                    </div>
+                    <div class="kpi-data">
+                        <span class="kpi-title">Coût Emballage Moyen</span>
+                        <h3 class="kpi-value" id="kpi-packing">0.42 €<span class="unit">/kg</span></h3>
+                        <span class="kpi-trend trend-stable">Optimisé (Cible 0.40)</span>
+                    </div>
+                </div>
+
+                <div class="kpi-card margin-card">
+                    <div class="kpi-icon-wrapper color-purple">
+                        <i data-lucide="ship"></i>
+                    </div>
+                    <div class="kpi-data">
+                        <span class="kpi-title">Fret & Logistique Moyen</span>
+                        <h3 class="kpi-value" id="kpi-logistics">0.85 €<span class="unit">/kg</span></h3>
+                        <span class="kpi-trend trend-negative">
+                            <i data-lucide="arrow-up-right"></i> +4% (Hausse carburant)
+                        </span>
+                    </div>
+                </div>
+
+                <div class="kpi-card margin-card">
+                    <div class="kpi-icon-wrapper color-orange">
+                        <i data-lucide="dollar-sign"></i>
+                    </div>
+                    <div class="kpi-data">
+                        <span class="kpi-title">Coût de Revient Total Moyen</span>
+                        <h3 class="kpi-value" id="kpi-cost-price">2.12 €<span class="unit">/kg</span></h3>
+                        <span class="kpi-trend trend-positive">Marge brute moyenne : +18%</span>
+                    </div>
+                </div>
+
+                <!-- Process Simulator & Real-time Calculator -->
+                <div class="card col-span-3 simulator-card">
+                    <div class="card-header">
+                        <h2>Simulateur Interactif de Coût de Revient par Lot</h2>
+                        <span class="badge badge-interactive">Simulation interactive</span>
+                    </div>
+                    <div class="card-body simulator-container">
+                        <!-- Controls -->
+                        <div class="simulator-controls">
+                            <div class="form-group">
+                                <label for="sim-input-weight">Quantité de Fruit Brut Réceptionné (Kg)</label>
+                                <input type="number" id="sim-input-weight" value="10000" step="500">
+                            </div>
+                            <div class="form-group">
+                                <label for="sim-purchase-price">Prix d'Achat Agriculteur (EUR/Kg)</label>
+                                <input type="number" id="sim-purchase-price" value="0.80" step="0.05" min="0.10">
+                            </div>
+                            <div class="form-group">
+                                <label for="sim-waste-rate">Taux d'Écart au Tri (%) - Hors Export</label>
+                                <div class="slider-wrapper">
+                                    <input type="range" id="sim-waste-rate" min="5" max="45" value="20">
+                                    <span id="waste-val">20%</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="sim-packing-cost">Emballage & Consommables (EUR/Kg)</label>
+                                <input type="number" id="sim-packing-cost" value="0.38" step="0.02" min="0.10">
+                            </div>
+                            <div class="form-group">
+                                <label for="sim-labor-cost">Main d'Œuvre Ligne (EUR/Heure)</label>
+                                <input type="number" id="sim-labor-cost" value="15.00" step="1">
+                            </div>
+                            <div class="form-group">
+                                <label for="sim-freight-cost">Fret Maritime & Logistique (EUR/Kg Export)</label>
+                                <input type="number" id="sim-freight-cost" value="0.75" step="0.05" min="0.10">
+                            </div>
+                        </div>
+
+                        <!-- Results Dashboard -->
+                        <div class="simulator-results">
+                            <div class="result-kpis">
+                                <div class="mini-kpi">
+                                    <span class="label">Poids Final Exporté</span>
+                                    <span class="value" id="res-export-weight">8 000 kg</span>
+                                </div>
+                                <div class="mini-kpi">
+                                    <span class="label">Rendement Matière</span>
+                                    <span class="value" id="res-yield">80%</span>
+                                </div>
+                            </div>
+                            <div class="chart-wrapper">
+                                <canvas id="costBreakdownChart"></canvas>
+                            </div>
+                            <div class="cost-summary">
+                                <div class="summary-line highlight">
+                                    <span>Coût de Revient Réel (Kg Exporté) :</span>
+                                    <span id="res-total-cost-kg">1.89 €/kg</span>
+                                </div>
+                                <div class="summary-line">
+                                    <span>Coût Total du Lot :</span>
+                                    <span id="res-total-lot-cost">15 120.00 €</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Batches Table -->
+                <div class="card col-span-2">
+                    <div class="card-header">
+                        <h2>Lots Récents & Performance</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table" id="batches-table">
+                                <thead>
+                                    <tr>
+                                        <th>Code Lot</th>
+                                        <th>Produit</th>
+                                        <th>Poids Brut</th>
+                                        <th>Rendement Tri</th>
+                                        <th>Coût de Revient/Kg</th>
+                                        <th>Statut</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Dynamic content via app.js -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cost Allocation Analysis (Structure chart) -->
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Répartition de l'Écart de Tri</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-wrapper pie-chart-wrapper">
+                            <canvas id="wasteDistributionChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal Nouveau Lot -->
+    <div class="modal" id="modal-lot">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Créer un Nouveau Lot de Réception</h2>
+                <button class="btn-close" id="btn-close-modal"><i data-lucide="x"></i></button>
+            </div>
+            <form id="form-new-lot">
+                <div class="form-group">
+                    <label for="lot-product">Type de Fruit / Légume</label>
+                    <select id="lot-product" required>
+                        <option value="Tomate Cerise">Tomate Cerise</option>
+                        <option value="Haricot Vert">Haricot Vert</option>
+                        <option value="Agrumes (Clémentines)">Agrumes (Clémentines)</option>
+                        <option value="Courgettes">Courgettes</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="lot-weight">Poids Brut Reçu (Kg)</label>
+                    <input type="number" id="lot-weight" value="5000" required>
+                </div>
+                <div class="form-group">
+                    <label for="lot-price">Prix Achat convenu (€/Kg)</label>
+                    <input type="number" id="lot-price" value="0.75" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="lot-supplier">Fournisseur / Coopérative</label>
+                    <input type="text" id="lot-supplier" placeholder="Ex: Coopérative Souss" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="btn-cancel-modal">Annuler</button>
+                    <button type="submit" class="btn btn-primary">Enregistrer le Lot</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
