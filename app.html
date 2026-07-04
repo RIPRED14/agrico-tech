@@ -39,6 +39,14 @@
                     <i data-lucide="layers"></i>
                     <span>Lignes de Tri</span>
                 </button>
+                <button class="menu-item" data-tab="consommables">
+                    <i data-lucide="box"></i>
+                    <span>Consommables & Traitements</span>
+                </button>
+                <button class="menu-item" data-tab="frigos">
+                    <i data-lucide="thermometer"></i>
+                    <span>Chambres Froides & Énergie</span>
+                </button>
                 <button class="menu-item" data-tab="expeditions">
                     <i data-lucide="truck"></i>
                     <span>Expéditions (UE)</span>
@@ -46,6 +54,10 @@
                 <button class="menu-item" data-tab="costs">
                     <i data-lucide="calculator"></i>
                     <span>Coût de Revient</span>
+                </button>
+                <button class="menu-item" data-tab="ia">
+                    <i data-lucide="bot" style="color: #60a5fa;"></i>
+                    <span style="font-weight: 600; color: #60a5fa;">Assistant IA & Rapports</span>
                 </button>
             </nav>
             
@@ -99,7 +111,7 @@
                                 <i data-lucide="package"></i>
                             </div>
                             <div class="kpi-data">
-                                <span class="kpi-title">Coût Emballage Moyen</span>
+                                <span class="kpi-title">Consommables / Kg</span>
                                 <h3 class="kpi-value" id="kpi-packing">0.38 €<span class="unit">/kg</span></h3>
                                 <span class="kpi-trend trend-stable">Dans la cible budgétaire</span>
                             </div>
@@ -107,12 +119,12 @@
 
                         <div class="kpi-card">
                             <div class="kpi-icon-wrapper color-purple">
-                                <i data-lucide="ship"></i>
+                                <i data-lucide="zap"></i>
                             </div>
                             <div class="kpi-data">
-                                <span class="kpi-title">Fret & Logistique Moyen</span>
-                                <h3 class="kpi-value" id="kpi-logistics">0.78 €<span class="unit">/kg</span></h3>
-                                <span class="kpi-trend trend-negative"><i data-lucide="alert-triangle"></i> Fret maritime en hausse</span>
+                                <span class="kpi-title">Coût Électrique Frigo</span>
+                                <h3 class="kpi-value" id="kpi-logistics">0.05 €<span class="unit">/kg</span></h3>
+                                <span class="kpi-trend trend-negative"><i data-lucide="alert-triangle"></i> Pic tarifaire KWh</span>
                             </div>
                         </div>
 
@@ -122,8 +134,8 @@
                             </div>
                             <div class="kpi-data">
                                 <span class="kpi-title">Coût de Revient Moyen</span>
-                                <h3 class="kpi-value" id="kpi-cost-price">1.96 €<span class="unit">/kg</span></h3>
-                                <span class="kpi-trend trend-positive">Marge préservée</span>
+                                <h3 class="kpi-value" id="kpi-cost-price">2.01 €<span class="unit">/kg</span></h3>
+                                <span class="kpi-trend trend-positive">Fret compris</span>
                             </div>
                         </div>
 
@@ -275,7 +287,158 @@
                     </div>
                 </section>
 
-                <!-- ==================== VIEW 4: EXPEDITIONS ==================== -->
+                <!-- ==================== VIEW 4: CONSOMMABLES ==================== -->
+                <section class="view-section" id="view-consommables">
+                    <div class="grid-two-cols">
+                        <!-- Table des consommables -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>Nomenclature des Consommables par Colis Export</h2>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table" id="consommables-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Désignation Consommable</th>
+                                                <th>Usage / Unité</th>
+                                                <th>Coût Unitaire (€)</th>
+                                                <th>Stock Restant</th>
+                                                <th>Statut Réappro</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Dynamic content -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Traitements chimiques de conservation -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>Traitements Phytosanitaires de Conservation</h2>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table" id="traitements-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Molécule / Agent</th>
+                                                <th>Cible Application</th>
+                                                <th>Dosage Recommandé</th>
+                                                <th>Coût au Litre/Kg</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Dynamic content -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ==================== VIEW 5: FRIGOS & ENERGIE ==================== -->
+                <section class="view-section" id="view-frigos">
+                    <div class="dashboard-grid">
+                        
+                        <!-- Frigo 1 Card -->
+                        <div class="card frigo-card">
+                            <div class="frigo-header">
+                                <h4>Chambre Froide 1 (Matière Première)</h4>
+                                <span class="badge badge-interactive">Stockage Brut</span>
+                            </div>
+                            <div class="frigo-body">
+                                <div class="thermometer-wrapper">
+                                    <span class="temp-val" id="temp-frigo-1">3.8 °C</span>
+                                    <div class="consigne-controls">
+                                        <label for="consigne-1">Consigne (°C)</label>
+                                        <input type="number" id="consigne-1" value="4" min="0" max="10">
+                                    </div>
+                                </div>
+                                <div class="frigo-stats">
+                                    <div class="stat-line"><span>Volume Stocké :</span> <strong>14.5 T</strong></div>
+                                    <div class="stat-line"><span>Puissance Estimée :</span> <strong>24 KW</strong></div>
+                                    <div class="stat-line highlight"><span>Coût Électrique Jour :</span> <strong id="cost-frigo-1">11.50 €</strong></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Frigo 2 Card -->
+                        <div class="card frigo-card">
+                            <div class="frigo-header">
+                                <h4>Chambre Froide 2 (Produits Finis)</h4>
+                                <span class="badge badge-interactive" style="background-color:#dbeafe; color:#2563eb;">Stockage Export</span>
+                            </div>
+                            <div class="frigo-body">
+                                <div class="thermometer-wrapper">
+                                    <span class="temp-val" id="temp-frigo-2">1.8 °C</span>
+                                    <div class="consigne-controls">
+                                        <label for="consigne-2">Consigne (°C)</label>
+                                        <input type="number" id="consigne-2" value="2" min="0" max="8">
+                                    </div>
+                                </div>
+                                <div class="frigo-stats">
+                                    <div class="stat-line"><span>Volume Stocké :</span> <strong>28.0 T</strong></div>
+                                    <div class="stat-line"><span>Puissance Estimée :</span> <strong>35 KW</strong></div>
+                                    <div class="stat-line highlight"><span>Coût Électrique Jour :</span> <strong id="cost-frigo-2">22.40 €</strong></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Frigo 3 Card -->
+                        <div class="card frigo-card">
+                            <div class="frigo-header">
+                                <h4>Chambre Froide 3 (Écarts de Tri)</h4>
+                                <span class="badge badge-interactive" style="background-color:#fef3c7; color:#d97706;">Stockage Local</span>
+                            </div>
+                            <div class="frigo-body">
+                                <div class="thermometer-wrapper">
+                                    <span class="temp-val" id="temp-frigo-3">7.5 °C</span>
+                                    <div class="consigne-controls">
+                                        <label for="consigne-3">Consigne (°C)</label>
+                                        <input type="number" id="consigne-3" value="8" min="2" max="12">
+                                    </div>
+                                </div>
+                                <div class="frigo-stats">
+                                    <div class="stat-line"><span>Volume Stocké :</span> <strong>8.2 T</strong></div>
+                                    <div class="stat-line"><span>Puissance Estimée :</span> <strong>12 KW</strong></div>
+                                    <div class="stat-line highlight"><span>Coût Électrique Jour :</span> <strong id="cost-frigo-3">5.20 €</strong></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Global Energy Report Card -->
+                        <div class="card col-span-3">
+                            <div class="card-header">
+                                <h2>Rapport Énergétique & Bilan KWh cumulé</h2>
+                            </div>
+                            <div class="card-body">
+                                <div class="simulator-container">
+                                    <div class="form-group">
+                                        <label for="kwh-price">Tarif Moyen Électricité (EUR / KWh)</label>
+                                        <input type="number" id="kwh-price" value="0.18" step="0.01">
+                                    </div>
+                                    <div class="cost-summary">
+                                        <div class="summary-line highlight">
+                                            <span>Consommation Électrique Totale estimée (Mois) :</span>
+                                            <span id="res-total-kwh">6,720 KWh</span>
+                                        </div>
+                                        <div class="summary-line">
+                                            <span>Budget Électrique chambres froides estimé (Mois) :</span>
+                                            <span id="res-total-energy-cost">1,209.60 €</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- ==================== VIEW 6: EXPEDITIONS ==================== -->
                 <section class="view-section" id="view-expeditions">
                     <div class="card">
                         <div class="card-header">
@@ -303,7 +466,7 @@
                     </div>
                 </section>
 
-                <!-- ==================== VIEW 5: COSTS (COÛT DE REVIENT) ==================== -->
+                <!-- ==================== VIEW 7: COSTS (COÛT DE REVIENT) ==================== -->
                 <section class="view-section" id="view-costs">
                     <div class="card">
                         <div class="card-header">
@@ -329,6 +492,71 @@
                                 </table>
                             </div>
                         </div>
+                    </div>
+                </section>
+
+                <!-- ==================== VIEW 8: IA ASSISTANT & RAPPORTS ==================== -->
+                <section class="view-section" id="view-ia">
+                    <div class="grid-two-cols">
+                        
+                        <!-- AI Assistant Terminal -->
+                        <div class="card flex flex-col h-[500px]">
+                            <div class="card-header border-b pb-4">
+                                <h2>Assistant IA de la Station</h2>
+                                <span class="badge badge-interactive" style="background-color:#dbeafe; color:#2563eb;">Connecté à la base</span>
+                            </div>
+                            <div class="card-body flex-grow overflow-y-auto p-4 space-y-4" id="ai-chat-body">
+                                <div class="ai-msg user-msg bg-slate-100 p-3 rounded-lg max-w-[80%] self-end">
+                                    Bonjour, pouvez-vous me faire une analyse des écarts de tri et de la facture d'électricité ?
+                                </div>
+                                <div class="ai-msg bot-msg bg-emerald-50 text-emerald-800 border border-emerald-100 p-3 rounded-lg max-w-[80%] self-start">
+                                    Bonjour Hamza. D'après l'analyse des données de tri, le lot **L-2607B (Haricot Vert)** présente le taux d'écart le plus élevé (25%). Cela augmente le coût matière réel de 0.95 €/kg à 1.27 €/kg. Concernant la facture d'électricité, les vannes de la chambre 2 (Produits finis) sont sur-sollicitées en raison d'une consigne basse de 2°C.
+                                </div>
+                            </div>
+                            <div class="p-4 border-t flex gap-2">
+                                <input type="text" id="ai-chat-input" placeholder="Demandez une analyse de coûts ou glissez une facture d'électricité..." class="flex-grow border rounded-lg px-4 py-2 text-sm outline-none">
+                                <button class="btn btn-primary" id="btn-ai-send">Analyser</button>
+                            </div>
+                        </div>
+
+                        <!-- Document Scanner & Periodical Report generator -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>Générateur de Rapports Décideurs (IA)</h2>
+                            </div>
+                            <div class="card-body space-y-6">
+                                <!-- Upload Simulation -->
+                                <div class="border-2 border-dashed border-slate-200 rounded-xl p-8 text-center cursor-pointer hover:border-emerald-400 transition-colors" id="ai-dropzone">
+                                    <i data-lucide="upload-cloud" class="w-12 h-12 mx-auto text-slate-400 mb-4"></i>
+                                    <h4 class="font-semibold text-sm">Déposer les documents (Bons de tri, Factures KWh, Fiches d'export)</h4>
+                                    <p class="text-xs text-slate-400 mt-2">Format PDF, PNG, JPG jusqu'à 10MB. Simulation d'analyse IA instantanée.</p>
+                                    <span id="file-uploaded-badge" class="badge badge-interactive mt-4 inline-block hidden">Document scanné ✓</span>
+                                </div>
+
+                                <!-- Periodic Report Generator -->
+                                <div class="form-group border-t pt-4">
+                                    <label for="report-period">Générer le rapport par période</label>
+                                    <div class="flex gap-2">
+                                        <select id="report-period" class="flex-grow">
+                                            <option value="jour">Rapport Journalier</option>
+                                            <option value="semaine">Rapport Hebdomadaire</option>
+                                            <option value="mois" selected>Rapport Mensuel</option>
+                                            <option value="trimestre">Rapport Trimestriel</option>
+                                        </select>
+                                        <button class="btn btn-primary" id="btn-generate-report">Générer Rapport</button>
+                                    </div>
+                                </div>
+
+                                <!-- AI output area -->
+                                <div class="bg-slate-50 border p-4 rounded-xl hidden" id="ai-report-output">
+                                    <h4 class="font-bold text-sm text-emerald-800 mb-2" id="ai-report-title">Rapport d'IA Mensuel</h4>
+                                    <div class="text-xs space-y-2 text-slate-600 font-serif leading-relaxed" id="ai-report-text">
+                                        <!-- Output text -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </section>
 

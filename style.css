@@ -105,7 +105,7 @@ body {
 .sidebar-menu {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 4px;
     flex-grow: 1;
 }
 
@@ -277,7 +277,7 @@ body {
 
 .grid-two-cols {
     display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
+    grid-template-columns: 1.1fr 0.9fr;
     gap: 24px;
 }
 
@@ -572,6 +572,103 @@ body {
     border-left-color: var(--info);
     background-color: #eff6ff;
     color: #1e40af;
+}
+
+/* Frigos styling */
+.frigo-card {
+    border: 1px solid #cbd5e1;
+    background-color: #ffffff;
+    transition: box-shadow 0.2s ease;
+}
+
+.frigo-card:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.frigo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 12px;
+    margin-bottom: 16px;
+}
+
+.frigo-header h4 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.thermometer-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f8fafc;
+    padding: 16px;
+    border-radius: var(--radius-md);
+    margin-bottom: 16px;
+    border: 1px solid var(--border-color);
+}
+
+.temp-val {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--primary);
+    font-family: monospace;
+}
+
+.consigne-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.consigne-controls input {
+    width: 80px;
+    padding: 6px;
+    font-size: 14px;
+    text-align: center;
+    border: 1px solid #cbd5e1;
+    border-radius: var(--radius-sm);
+}
+
+.frigo-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.stat-line {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #475569;
+}
+
+.stat-line.highlight {
+    border-top: 1px dashed var(--border-color);
+    padding-top: 8px;
+    font-size: 14px;
+    color: var(--text-main);
+}
+
+/* AI Chat box styling */
+.ai-msg {
+    display: inline-block;
+    clear: both;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.user-msg {
+    float: right;
+    border-bottom-right-radius: 0 !important;
+}
+
+.bot-msg {
+    float: left;
+    border-bottom-left-radius: 0 !important;
 }
 
 /* Tables styling */
