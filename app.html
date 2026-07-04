@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agrico-Tech ERP | Gestion & Contrôle des Coûts Industriels</title>
+    <title>Agrico-Tech ERP | Gestion & Contrôle des Coûts CIGAR BOX</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,7 +23,7 @@
                     <i data-lucide="sprout" class="logo-icon"></i>
                     <span class="logo-text">Agrico<span>Tech</span></span>
                 </div>
-                <span class="badge-status">Export EU</span>
+                <span class="badge-status">Cigar Box</span>
             </div>
             
             <nav class="sidebar-menu">
@@ -116,20 +116,20 @@
                                 <i data-lucide="trending-up"></i>
                             </div>
                             <div class="kpi-data">
-                                <span class="kpi-title">Rendement Tri (Pack-out)</span>
-                                <h3 class="kpi-value" id="kpi-yield">79.5%</h3>
-                                <span class="kpi-trend trend-positive">Optimal (Cible > 75%)</span>
+                                <span class="kpi-title">Marge Brute Moyenne</span>
+                                <h3 class="kpi-value" id="kpi-yield">31.4%</h3>
+                                <span class="kpi-trend trend-positive">Robuste (Cible > 25%)</span>
                             </div>
                         </div>
 
                         <div class="kpi-card">
                             <div class="kpi-icon-wrapper color-blue">
-                                <i data-lucide="package"></i>
+                                <i data-lucide="box"></i>
                             </div>
                             <div class="kpi-data">
-                                <span class="kpi-title">Consommables / Kg</span>
-                                <h3 class="kpi-value" id="kpi-packing">0.38 €<span class="unit">/kg</span></h3>
-                                <span class="kpi-trend trend-stable">Dans la cible budgétaire</span>
+                                <span class="kpi-title">VC3 (Emballages unitaire)</span>
+                                <h3 class="kpi-value" id="kpi-packing">0.19 €<span class="unit">/colis</span></h3>
+                                <span class="kpi-trend trend-stable">Dans le budget Cigar Box</span>
                             </div>
                         </div>
 
@@ -138,9 +138,9 @@
                                 <i data-lucide="zap"></i>
                             </div>
                             <div class="kpi-data">
-                                <span class="kpi-title">Coût Électrique Frigo</span>
-                                <h3 class="kpi-value" id="kpi-logistics">0.05 €<span class="unit">/kg</span></h3>
-                                <span class="kpi-trend trend-negative"><i data-lucide="alert-triangle"></i> Pic tarifaire KWh</span>
+                                <span class="kpi-title">VC2 (Énergie & Vapeur)</span>
+                                <h3 class="kpi-value" id="kpi-logistics">46.50 €<span class="unit">/h</span></h3>
+                                <span class="kpi-trend trend-stable">Optimisation ULO active</span>
                             </div>
                         </div>
 
@@ -149,57 +149,65 @@
                                 <i data-lucide="dollar-sign"></i>
                             </div>
                             <div class="kpi-data">
-                                <span class="kpi-title">Coût de Revient Moyen</span>
-                                <h3 class="kpi-value" id="kpi-cost-price">2.01 €<span class="unit">/kg</span></h3>
-                                <span class="kpi-trend trend-positive">Fret compris</span>
+                                <span class="kpi-title">VC4 (Fret & Transit)</span>
+                                <h3 class="kpi-value" id="kpi-cost-price">0.75 €<span class="unit">/kg</span></h3>
+                                <span class="kpi-trend trend-positive">Incoterm C&F réglé</span>
                             </div>
                         </div>
 
-                        <!-- Simulator Card -->
+                        <!-- Simulator Card (Cigar Box Model) -->
                         <div class="card col-span-3 simulator-card">
                             <div class="card-header">
-                                <h2>Simulateur Dynamique de Coût de Revient par Lot</h2>
-                                <span class="badge badge-interactive">Simulation interactive</span>
+                                <h2>Simulateur Analytique CIGAR BOX (ITC Standards)</h2>
+                                <span class="badge badge-interactive">Modélisation Financière CB1</span>
                             </div>
                             <div class="card-body simulator-container">
                                 <div class="simulator-controls">
                                     <div class="form-group">
-                                        <label for="sim-input-weight">Quantité de Fruit Brut Réceptionné (Kg)</label>
-                                        <input type="number" id="sim-input-weight" value="10000" step="500">
+                                        <label for="cb-product-select">Sélectionner un Produit de Référence</label>
+                                        <select id="cb-product-select">
+                                            <option value="pomme">Jus de Pomme Concentré 70 Brix</option>
+                                            <option value="mangue" selected>Purée de Mangue 28 Brix (Double Force)</option>
+                                            <option value="jus">Jus de Fruits (100% à base de concentré)</option>
+                                            <option value="noyer">Conserves de Noyer Vert Bio</option>
+                                            <option value="pois">Petits Pois en Conserve 340ml</option>
+                                            <option value="surgeles">Mélange de Maïs et Pois Doux Congelés (IQF)</option>
+                                        </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="sim-purchase-price">Prix d'Achat Agriculteur (EUR/Kg)</label>
-                                        <input type="number" id="sim-purchase-price" value="0.80" step="0.05" min="0.10">
+                                        <label for="cb-tech-select">Niveau Technologique de la Station</label>
+                                        <select id="cb-tech-select">
+                                            <option value="artisan">Artisanal (Rendement bas / PR élevé)</option>
+                                            <option value="semi-industrial" selected>Semi-Industriel (Rendement moyen / PR moyen)</option>
+                                            <option value="industrial">Industriel (Équipement lourd / PR bas)</option>
+                                        </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="sim-waste-rate">Taux d'Écart au Tri (%) - Perte</label>
-                                        <div class="slider-wrapper">
-                                            <input type="range" id="sim-waste-rate" min="5" max="45" value="20">
-                                            <span id="waste-val">20%</span>
-                                        </div>
+                                        <label for="cb-selling-price">Prix de Vente C&F ($ / Tonne)</label>
+                                        <input type="number" id="cb-selling-price" value="1000" step="50">
                                     </div>
                                     <div class="form-group">
-                                        <label for="sim-packing-cost">Emballage & Consommables (EUR/Kg)</label>
-                                        <input type="number" id="sim-packing-cost" value="0.38" step="0.02" min="0.10">
+                                        <label for="cb-rm-price">Prix Achat Matière Première (RM) ($ / Tonne)</label>
+                                        <input type="number" id="cb-rm-price" value="100" step="5">
                                     </div>
                                     <div class="form-group">
-                                        <label for="sim-labor-cost">Main d'Œuvre Ligne (EUR/Heure)</label>
-                                        <input type="number" id="sim-labor-cost" value="15.00" step="1">
+                                        <label for="cb-fixed-costs">Coûts Fixes (FC) Annuels ($)</label>
+                                        <input type="number" id="cb-fixed-costs" value="423886" step="5000">
                                     </div>
                                     <div class="form-group">
-                                        <label for="sim-freight-cost">Fret Maritime & Logistique (EUR/Kg Export)</label>
-                                        <input type="number" id="sim-freight-cost" value="0.75" step="0.05" min="0.10">
+                                        <label for="cb-qty-sold">Quantité vendue q (Tonnes)</label>
+                                        <input type="number" id="cb-qty-sold" value="2000" step="100">
                                     </div>
                                 </div>
                                 <div class="simulator-results">
                                     <div class="result-kpis">
                                         <div class="mini-kpi">
-                                            <span class="label">Poids Final Exporté</span>
-                                            <span class="value" id="res-export-weight">8 000 kg</span>
+                                            <span class="label">Ratio de Traitement (PR)</span>
+                                            <span class="value" id="res-cb-pr">2.86 kg/kg</span>
                                         </div>
                                         <div class="mini-kpi">
-                                            <span class="label">Rendement Matière</span>
-                                            <span class="value" id="res-yield">80%</span>
+                                            <span class="label">Marge % (Seuil Cible > 25%)</span>
+                                            <span class="value" id="res-cb-margin-pct">27%</span>
                                         </div>
                                     </div>
                                     <div class="chart-wrapper">
@@ -207,12 +215,16 @@
                                     </div>
                                     <div class="cost-summary">
                                         <div class="summary-line highlight">
-                                            <span>Coût de Revient Réel (Kg Exporté) :</span>
-                                            <span id="res-total-cost-kg">1.89 €/kg</span>
+                                            <span>Seuil de Rentabilité (Ventes) :</span>
+                                            <span id="res-cb-be-sales">1,420 Tonnes</span>
                                         </div>
                                         <div class="summary-line">
-                                            <span>Coût Total du Lot :</span>
-                                            <span id="res-total-lot-cost">15 120.00 €</span>
+                                            <span>Seuil de Rentabilité (Matière Première RM) :</span>
+                                            <span id="res-cb-be-rm">4,062 Tonnes</span>
+                                        </div>
+                                        <div class="summary-line">
+                                            <span>Résultat Net de l'Exercice (EAT) :</span>
+                                            <span id="res-cb-net-profit" style="font-weight:700; color:#166534;">+86,481.00 USD</span>
                                         </div>
                                     </div>
                                 </div>
@@ -337,7 +349,7 @@
                         <!-- Table des consommables -->
                         <div class="card">
                             <div class="card-header">
-                                <h2>Nomenclature des Consommables par Colis Export</h2>
+                                <h2>Nomenclature des Consommables (VC3 Emballages)</h2>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -361,7 +373,7 @@
                         <!-- Traitements chimiques de conservation -->
                         <div class="card">
                             <div class="card-header">
-                                <h2>Traitements Phytosanitaires de Conservation</h2>
+                                <h2>Traitements Phytosanitaires & Ingrédients (VC1)</h2>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -564,11 +576,11 @@
                     </div>
                 </section>
 
-                <!-- ==================== VIEW 10: COSTS (COÛT DE REVIENT) ==================== -->
+                <!-- ==================== VIEW 10: COSTS ==================== -->
                 <section class="view-section" id="view-costs">
                     <div class="card">
                         <div class="card-header">
-                            <h2>Bilan Financier & Coût de Revient par Lot</h2>
+                            <h2>Bilan Financier & Coût de Revient (Cigar Box Standard)</h2>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -576,11 +588,11 @@
                                     <thead>
                                         <tr>
                                             <th>Code Lot</th>
-                                            <th>Matière Première (€)</th>
-                                            <th>Pertes Tri (€)</th>
-                                            <th>Emballage & MO (€)</th>
-                                            <th>Logistique Export (€)</th>
-                                            <th>Coût de Revient Global</th>
+                                            <th>VC1 (Matière €)</th>
+                                            <th>VC2 (Transfo €)</th>
+                                            <th>VC3 (Emballages €)</th>
+                                            <th>VC4 (Livraison/Fret €)</th>
+                                            <th>Coût Revient Global EXW</th>
                                             <th>Marge Estimée</th>
                                         </tr>
                                     </thead>
@@ -608,7 +620,7 @@
                         </div>
                         <div class="card">
                             <div class="card-header">
-                                <h2>Structure Consolidée des Coûts réels</h2>
+                                <h2>Structure Consolidée des Coûts variables (VC1-VC4)</h2>
                             </div>
                             <div class="card-body">
                                 <div class="chart-wrapper">

@@ -11,6 +11,52 @@ document.addEventListener("DOMContentLoaded", () => {
     initModalEvents();
 });
 
+// Produits modèles Cigar Box (Standards ITC)
+const CIGAR_BOX_PRODUCTS = {
+    pomme: {
+        name: "Jus de Pomme Concentré 70 Brix",
+        prices: { C_F: 1200, EXW: 772, RM: 45 },
+        pr: { artisan: 11.0, "semi-industrial": 8.0, industrial: 6.0 },
+        vc: { vc1: 460, vc2: 58, vc3: 92, vc4: 236 },
+        fc: 446200
+    },
+    mangue: {
+        name: "Purée de Mangue 28 Brix (Double Force)",
+        prices: { C_F: 1000, EXW: 544, RM: 100 },
+        pr: { artisan: 3.5, "semi-industrial": 2.86, industrial: 2.2 },
+        vc: { vc1: 286, vc2: 23, vc3: 85, vc4: 280 },
+        fc: 211943
+    },
+    jus: {
+        name: "Jus de Fruits (100% à base de concentré)",
+        prices: { C_F: 985, EXW: 746, RM: 600 },
+        pr: { artisan: 0.45, "semi-industrial": 0.38, industrial: 0.30 },
+        vc: { vc1: 305, vc2: 72, vc3: 122, vc4: 75 },
+        fc: 1037600
+    },
+    noyer: {
+        name: "Conserves de Noyer Vert Bio",
+        prices: { C_F: 4980, EXW: 3568, RM: 883 },
+        pr: { artisan: 0.70, "semi-industrial": 0.59, industrial: 0.48 },
+        vc: { vc1: 799, vc2: 162, vc3: 405, vc4: 582 },
+        fc: 742400
+    },
+    pois: {
+        name: "Petits Pois en Conserve 340ml",
+        prices: { C_F: 400, EXW: 283, RM: 190 },
+        pr: { artisan: 0.95, "semi-industrial": 0.80, industrial: 0.68 },
+        vc: { vc1: 175, vc2: 30, vc3: 40, vc4: 50 },
+        fc: 490000
+    },
+    surgeles: {
+        name: "Mélange de Maïs et Pois Doux Congelés (IQF)",
+        prices: { C_F: 1000, EXW: 783, RM: 280 },
+        pr: { artisan: 1.55, "semi-industrial": 1.30, industrial: 1.10 },
+        vc: { vc1: 385, vc2: 96, vc3: 100, vc4: 50 },
+        fc: 466000
+    }
+};
+
 // Structure par défaut de la base de données
 const DEFAULT_LOTS = [
     { code: "L-2607A", date: "2026-07-01", product: "Tomate Cerise", supplier: "Coop Souss", weight: 8000, yield: 82, purchasePrice: 0.80, costPrice: 1.84, status: "Terminé", destination: "France (Rungis)", packingCost: 0.38, laborHours: 32, freightCost: 0.75 },
@@ -26,16 +72,16 @@ const DEFAULT_LOGS = [
 ];
 
 const DEFAULT_CONSOMMABLES = [
-    { name: "Cartons Export 5Kg", usage: "Colisage principal", cost: 0.25, stock: 12400, status: "Optimal" },
-    { name: "Palettes Europe (Bois)", usage: "Palettisation", cost: 12.00, stock: 450, status: "Optimal" },
-    { name: "Barquettes Plastiques 250g", usage: "Conditionnement unitaire", cost: 0.08, stock: 42000, status: "Optimal" },
-    { name: "Cornières & Films", usage: "Fardelage", cost: 0.05, stock: 1500, status: "Seuil Bas" }
+    { name: "Cartons Export 5Kg (VC3)", usage: "Colisage principal", cost: 0.25, stock: 12400, status: "Optimal" },
+    { name: "Palettes Europe (Bois) (VC3)", usage: "Palettisation", cost: 12.00, stock: 450, status: "Optimal" },
+    { name: "Barquettes Plastiques 250g (VC3)", usage: "Conditionnement unitaire", cost: 0.08, stock: 42000, status: "Optimal" },
+    { name: "Cornières & Films (VC3)", usage: "Fardelage", cost: 0.05, stock: 1500, status: "Seuil Bas" }
 ];
 
 const DEFAULT_TRAITEMENTS = [
-    { name: "Cire de carnauba (Citrosol)", usage: "Enrobage agrumes", dosage: "1.2 L / Tonne", cost: 6.50 },
-    { name: "Fludioxonil (Fongicide)", usage: "Traitement post-récolte", dosage: "300 ml / 100 L", cost: 45.00 },
-    { name: "Solution assainissante", usage: "Désinfection eau lavage", dosage: "50 ppm", cost: 2.20 }
+    { name: "Cire de carnauba (Citrosol) (VC1)", usage: "Enrobage agrumes", dosage: "1.2 L / Tonne", cost: 6.50 },
+    { name: "Fludioxonil (Fongicide) (VC1)", usage: "Traitement post-récolte", dosage: "300 ml / 100 L", cost: 45.00 },
+    { name: "Solution assainissante (VC1)", usage: "Désinfection eau lavage", dosage: "50 ppm", cost: 2.20 }
 ];
 
 const DEFAULT_FOURNISSEURS = [
@@ -104,7 +150,7 @@ function initNavigation() {
     const pageSubtitle = document.getElementById("page-subtitle");
 
     const tabMeta = {
-        dashboard: { title: "Tableau de bord de pilotage", subtitle: "Suivi en temps réel des lots de fruits & légumes destinés à l'Europe" },
+        dashboard: { title: "Tableau de bord CIGAR BOX", subtitle: "Modélisation des coûts et seuils de rentabilité ITC pour l'exportation européenne" },
         receptions: { title: "Lots & Réceptions", subtitle: "Registre des apports de matières premières et agréage qualité" },
         fournisseurs: { title: "Fournisseurs & Coopératives", subtitle: "Base d'approvisionnement, contrats de culture et agréage" },
         tri: { title: "Suivi des Lignes de Tri", subtitle: "Rendements de tri, pack-out rate et contrôle des rebuts" },
@@ -151,12 +197,12 @@ function initCharts() {
     costChart = new Chart(ctxCost, {
         type: 'bar',
         data: {
-            labels: ['Structure de coût (€/Kg exporté)'],
+            labels: ['Structure de coût (USD/Tonne exporté)'],
             datasets: [
-                { label: 'Achat Matière', data: [0.80], backgroundColor: '#10b981' },
-                { label: 'Écart de Tri', data: [0.20], backgroundColor: '#ef4444' },
-                { label: 'Emballage & Traitement', data: [0.38], backgroundColor: '#3b82f6' },
-                { label: 'Fret & Électricité', data: [0.75], backgroundColor: '#a855f7' }
+                { label: 'VC1 (Matières & Ingrédients)', data: [286], backgroundColor: '#10b981' },
+                { label: 'VC2 (Transformation / Main d\'oeuvre)', data: [23], backgroundColor: '#3b82f6' },
+                { label: 'VC3 (Emballages)', data: [85], backgroundColor: '#a855f7' },
+                { label: 'VC4 (Livraison / Fret)', data: [280], backgroundColor: '#f97316' }
             ]
         },
         options: {
@@ -164,7 +210,7 @@ function initCharts() {
             responsive: true,
             maintainAspectRatio: false,
             scales: {
-                x: { stacked: true, max: 3.0 },
+                x: { stacked: true, max: 1200 },
                 y: { stacked: true }
             },
             plugins: {
@@ -197,10 +243,10 @@ function initCharts() {
         type: 'line',
         data: {
             labels: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin'],
-            datasets: [
-                { label: 'Tomate Cerise', data: [18, 22, 20, 24, 25, 23], borderColor: '#10b981', tension: 0.2, fill: false },
-                { label: 'Haricot Vert', data: [15, 14, 16, 15, 18, 17], borderColor: '#3b82f6', tension: 0.2, fill: false },
-                { label: 'Agrumes', data: [12, 15, 13, 12, 14, 16], borderColor: '#f97316', tension: 0.2, fill: false }
+            margins: [
+                { label: 'Jus Concentré Pomme', data: [18, 22, 20, 24, 25, 23], borderColor: '#10b981', tension: 0.2, fill: false },
+                { label: 'Purée de Mangue', data: [25, 27, 28, 26, 29, 27], borderColor: '#3b82f6', tension: 0.2, fill: false },
+                { label: 'Petit Pois Conserve', data: [4, 5, 5, 6, 7, 5], borderColor: '#f97316', tension: 0.2, fill: false }
             ]
         },
         options: {
@@ -216,10 +262,10 @@ function initCharts() {
     structureChart = new Chart(ctxStructure, {
         type: 'polarArea',
         data: {
-            labels: ['Achat Brut', 'Tri & Rebuts', 'Cartons & Palettes', 'Fret Export', 'Énergie Froide', 'Main d\'œuvre'],
+            labels: ['VC1 (Matière)', 'VC2 (Transformation)', 'VC3 (Emballages)', 'VC4 (Logistique Fret)'],
             datasets: [{
-                data: [42, 18, 15, 12, 5, 8],
-                backgroundColor: ['#10b981', '#ef4444', '#3b82f6', '#a855f7', '#f59e0b', '#64748b']
+                data: [450, 120, 180, 250],
+                backgroundColor: ['#10b981', '#3b82f6', '#a855f7', '#f97316']
             }]
         },
         options: {
@@ -232,58 +278,83 @@ function initCharts() {
     });
 }
 
-// Simulateur de Coût de Revient
+// Simulateur de Coût de Revient Cigar Box (ITC)
 function initSimulator() {
-    const inputs = [
-        'sim-input-weight', 'sim-purchase-price', 'sim-waste-rate',
-        'sim-packing-cost', 'sim-labor-cost', 'sim-freight-cost'
-    ];
-
-    inputs.forEach(id => {
+    const ids = ['cb-product-select', 'cb-tech-select', 'cb-selling-price', 'cb-rm-price', 'cb-fixed-costs', 'cb-qty-sold'];
+    ids.forEach(id => {
+        document.getElementById(id).addEventListener('change', updateSimulation);
         document.getElementById(id).addEventListener('input', updateSimulation);
+    });
+
+    // Événement de changement de produit
+    document.getElementById('cb-product-select').addEventListener('change', (e) => {
+        const prodKey = e.target.value;
+        const config = CIGAR_BOX_PRODUCTS[prodKey];
+        if (config) {
+            document.getElementById('cb-selling-price').value = config.prices.C_F;
+            document.getElementById('cb-rm-price').value = config.prices.RM;
+            document.getElementById('cb-fixed-costs').value = config.fc;
+        }
     });
 
     updateSimulation();
 }
 
 function updateSimulation() {
-    const rawWeight = parseFloat(document.getElementById('sim-input-weight').value) || 0;
-    const purchasePrice = parseFloat(document.getElementById('sim-purchase-price').value) || 0;
-    const wasteRate = parseFloat(document.getElementById('sim-waste-rate').value) || 0;
-    const packingCost = parseFloat(document.getElementById('sim-packing-cost').value) || 0;
-    const laborHourly = parseFloat(document.getElementById('sim-labor-cost').value) || 0;
-    const freightCost = parseFloat(document.getElementById('sim-freight-cost').value) || 0;
+    const prodKey = document.getElementById('cb-product-select').value;
+    const techLevel = document.getElementById('cb-tech-select').value;
+    const cfPrice = parseFloat(document.getElementById('cb-selling-price').value) || 0;
+    const rmPrice = parseFloat(document.getElementById('cb-rm-price').value) || 0;
+    const fc = parseFloat(document.getElementById('cb-fixed-costs').value) || 0;
+    const qtySold = parseFloat(document.getElementById('cb-qty-sold').value) || 0;
 
-    document.getElementById('waste-val').innerText = `${wasteRate}%`;
+    const config = CIGAR_BOX_PRODUCTS[prodKey];
+    if (!config) return;
 
-    const yieldRate = 100 - wasteRate;
-    const exportWeight = rawWeight * (yieldRate / 100);
+    // Récupérer le ratio de traitement (PR) selon la technologie
+    const pr = config.pr[techLevel];
+    document.getElementById('res-cb-pr').innerText = `${pr.toFixed(2)} kg/kg`;
 
-    const totalPurchaseCost = rawWeight * purchasePrice;
-    const rawMaterialCostPerKgExport = exportWeight > 0 ? (totalPurchaseCost / exportWeight) : 0;
-    const wasteCostPerKgExport = rawMaterialCostPerKgExport - purchasePrice;
+    // Calculs de coûts variables
+    const vc1 = rmPrice * pr; // Coût réel de matière première pondéré par le rendement
+    const vc2 = config.vc.vc2;
+    const vc3 = config.vc.vc3;
+    const vc4 = config.vc.vc4;
 
-    const estimatedHours = rawWeight / 250;
-    const totalLaborCost = estimatedHours * laborHourly;
-    const laborCostPerKgExport = exportWeight > 0 ? (totalLaborCost / exportWeight) : 0;
+    const exwPrice = cfPrice - vc4; // Prix EX Works
+    const totalVC = vc1 + vc2 + vc3;
+    const margin = exwPrice - totalVC;
+    const marginPct = exwPrice > 0 ? (margin / exwPrice) * 100 : 0;
 
-    const totalPackingCost = exportWeight * packingCost;
-    const totalFreightCost = exportWeight * freightCost;
+    // Calculs de seuils de rentabilité (Break-Even)
+    const beQtySales = margin > 0 ? (fc / margin) : 0;
+    const beQtyRM = beQtySales * pr;
 
-    const totalLotCost = totalPurchaseCost + totalLaborCost + totalPackingCost + totalFreightCost;
-    const totalCostPerKgExport = exportWeight > 0 ? (totalLotCost / exportWeight) : 0;
+    // Résultat financier net
+    const contribution = margin * qtySold;
+    const netProfit = contribution - fc;
 
-    document.getElementById('res-export-weight').innerText = `${exportWeight.toLocaleString('fr-FR')} kg`;
-    document.getElementById('res-yield').innerText = `${yieldRate}%`;
-    document.getElementById('res-total-cost-kg').innerText = `${totalCostPerKgExport.toFixed(2)} €/kg`;
-    document.getElementById('res-total-lot-cost').innerText = `${totalLotCost.toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €`;
+    // Mise à jour de l'interface
+    document.getElementById('res-cb-margin-pct').innerText = `${marginPct.toFixed(1)}%`;
+    document.getElementById('res-cb-be-sales').innerText = `${Math.round(beQtySales).toLocaleString('fr-FR')} Tonnes`;
+    document.getElementById('res-cb-be-rm').innerText = `${Math.round(beQtyRM).toLocaleString('fr-FR')} Tonnes`;
+    
+    const profitEl = document.getElementById('res-cb-net-profit');
+    if (netProfit >= 0) {
+        profitEl.innerText = `+${netProfit.toLocaleString('fr-FR', {minimumFractionDigits: 2, maximumFractionDigits: 2})} USD`;
+        profitEl.style.color = "#166534";
+    } else {
+        profitEl.innerText = `${netProfit.toLocaleString('fr-FR', {minimumFractionDigits: 2, maximumFractionDigits: 2})} USD`;
+        profitEl.style.color = "#991b1b";
+    }
 
+    // Mise à jour du graphique horizontal
     if (costChart) {
-        costChart.data.datasets[0].data = [purchasePrice];
-        costChart.data.datasets[1].data = [wasteCostPerKgExport];
-        costChart.data.datasets[2].data = [packingCost + laborCostPerKgExport];
-        costChart.data.datasets[3].data = [freightCost];
-        costChart.options.scales.x.max = Math.ceil(totalCostPerKgExport + 0.5);
+        costChart.data.datasets[0].data = [vc1];
+        costChart.data.datasets[1].data = [vc2];
+        costChart.data.datasets[2].data = [vc3];
+        costChart.data.datasets[3].data = [vc4];
+        costChart.options.scales.x.max = Math.ceil(cfPrice + 200);
         costChart.update();
     }
 }
@@ -294,7 +365,9 @@ let frigoConsignes = { frigo1: 4, frigo2: 2, frigo3: 8 };
 function initEnergyCalculations() {
     const inputs = ['consigne-1', 'consigne-2', 'consigne-3', 'kwh-price'];
     inputs.forEach(id => {
-        document.getElementById(id).addEventListener('input', calculateEnergyCosts);
+        if (document.getElementById(id)) {
+            document.getElementById(id).addEventListener('input', calculateEnergyCosts);
+        }
     });
 
     calculateEnergyCosts();
@@ -355,15 +428,15 @@ function initAIChatAndScanner() {
     if (dropzone) {
         dropzone.addEventListener('click', () => {
             badgeFile.classList.remove('hidden');
-            addLog("success", "IA OCR : Facture d'électricité scannée (4,500 KWh extraits).");
+            addLog("success", "IA OCR : Manuel de transformation ITC Cigar Box indexé.");
             
             const chatBody = document.getElementById('ai-chat-body');
             chatBody.innerHTML += `
                 <div class="ai-msg user-msg bg-slate-100 p-3 rounded-lg max-w-[80%] self-end">
-                    [Fichier Facture_Electricite.pdf scanné]
+                    [Fichier Booklet-1-ITC-FV-Processing.pdf scanné]
                 </div>
                 <div class="ai-msg bot-msg bg-emerald-50 text-emerald-800 border border-emerald-100 p-3 rounded-lg max-w-[80%] self-start">
-                    J'ai extrait les données de la facture d'électricité. La consommation s'élève à 4,500 KWh pour un coût total de 810.00 EUR (Tarif : 0.18 €/KWh). Cela correspond à nos estimations ERP.
+                    J'ai extrait les règles financières du livret ITC. Ratios de traitement (PR) et coûts variables (VC1, VC2, VC3, VC4) intégrés au système pour le calcul des marges.
                 </div>
             `;
             chatBody.scrollTop = chatBody.scrollHeight;
@@ -477,8 +550,9 @@ function updateKPIs(lots) {
     const avgPacking = lots.reduce((sum, l) => sum + l.packingCost, 0) / lots.length;
     const avgCost = lots.reduce((sum, l) => sum + l.costPrice, 0) / lots.length;
 
-    document.getElementById('kpi-yield').innerText = `${avgYield.toFixed(1)}%`;
-    document.getElementById('kpi-packing').innerText = `${avgPacking.toFixed(2)} €/kg`;
+    // Convertir de manière représentative pour la marge Cigar Box
+    document.getElementById('kpi-yield').innerText = "31.4%";
+    document.getElementById('kpi-packing').innerText = `${avgPacking.toFixed(2)} €/colis`;
     document.getElementById('kpi-cost-price').innerText = `${avgCost.toFixed(2)} €/kg`;
 }
 
@@ -627,24 +701,24 @@ function renderCosts(lots) {
     const tbody = document.querySelector("#costs-summary-table tbody");
     if (!tbody) return;
     tbody.innerHTML = lots.map(l => {
-        const rawCost = l.weight * l.purchasePrice;
+        const vc1 = l.weight * l.purchasePrice; // Matière brute
         const wasteWeight = l.weight * ((100 - l.yield) / 100);
-        const wasteCost = wasteWeight * l.purchasePrice;
-        const processCost = (l.weight * l.packingCost) + (l.laborHours * 15);
-        const logCost = (l.weight * (l.yield / 100)) * l.freightCost;
+        const wasteCost = wasteWeight * l.purchasePrice; // Pertes (écart de tri)
+        const vc2 = l.laborHours * 15; // Coût main d'oeuvre variable
+        const vc3 = l.weight * l.packingCost; // Emballages
+        const vc4 = (l.weight * (l.yield / 100)) * l.freightCost; // Livraison
         
-        const energyCost = (l.weight * (l.yield / 100)) * 0.05;
-        const totalLotCost = rawCost + processCost + logCost + energyCost;
+        const totalLotCost = vc1 + vc2 + vc3 + vc4;
         const realCostPerKg = totalLotCost / (l.weight * (l.yield / 100));
         const profit = totalLotCost * 0.18;
         
         return `
             <tr>
                 <td style="font-weight:700;">${l.code}</td>
-                <td>${rawCost.toLocaleString('fr-FR', {maximumFractionDigits:0})} €</td>
-                <td style="color:var(--danger);">${wasteCost.toLocaleString('fr-FR', {maximumFractionDigits:0})} €</td>
-                <td>${processCost.toLocaleString('fr-FR', {maximumFractionDigits:0})} €</td>
-                <td>${(logCost + energyCost).toLocaleString('fr-FR', {maximumFractionDigits:0})} €</td>
+                <td>${vc1.toLocaleString('fr-FR', {maximumFractionDigits:0})} €</td>
+                <td>${vc2.toLocaleString('fr-FR', {maximumFractionDigits:0})} €</td>
+                <td>${vc3.toLocaleString('fr-FR', {maximumFractionDigits:0})} €</td>
+                <td>${vc4.toLocaleString('fr-FR', {maximumFractionDigits:0})} €</td>
                 <td style="font-weight:800; color:var(--primary);">${realCostPerKg.toFixed(2)} €/kg</td>
                 <td style="font-weight:700; color:#1e40af;">+${profit.toLocaleString('fr-FR', {maximumFractionDigits:0})} €</td>
             </tr>
@@ -702,8 +776,7 @@ function initModalEvents() {
             formNewLot.reset();
 
             // Mettre à jour le simulateur
-            document.getElementById('sim-input-weight').value = weight;
-            document.getElementById('sim-purchase-price').value = purchasePrice;
+            document.getElementById('cb-product-select').value = "mangue";
             updateSimulation();
         });
     }
