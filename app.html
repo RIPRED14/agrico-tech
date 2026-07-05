@@ -247,6 +247,23 @@
 
                 <!-- ==================== VIEW 2: RECEPTIONS ==================== -->
                 <section class="view-section" id="view-receptions">
+                    <!-- Workflow de réemballage interactif -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Flux opérationnel de Réemballage (Workflow du Lot sélectionné)</h2>
+                            <span class="badge badge-interactive">Suivi physique des étapes</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="workflow-stepper" id="workflow-visualizer" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; position: relative;">
+                                <!-- Rempli dynamiquement en JS -->
+                            </div>
+                            <div class="flex justify-between items-center" id="workflow-actions-panel">
+                                <span class="text-sm text-slate-500 font-medium" id="workflow-status-text">Sélectionnez un lot ci-dessous pour suivre son acheminement physique.</span>
+                                <button class="btn btn-primary" id="btn-next-step" disabled>Étape Suivante <i data-lucide="arrow-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="card">
                         <div class="card-header">
                             <h2>Registre des Apports & Matières Premières</h2>
@@ -260,9 +277,9 @@
                                             <th>Date Réception</th>
                                             <th>Produit</th>
                                             <th>Fournisseur</th>
-                                            <th>Poids Brut Reçu</th>
-                                            <th>Prix d'Achat</th>
-                                            <th>Qualité Agréage</th>
+                                            <th>Poids Brut</th>
+                                            <th>Étape Courante</th>
+                                            <th>Qualité</th>
                                         </tr>
                                     </thead>
                                     <tbody>

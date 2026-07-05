@@ -59,9 +59,9 @@ const CIGAR_BOX_PRODUCTS = {
 
 // Structure par défaut de la base de données
 const DEFAULT_LOTS = [
-    { code: "L-2607A", date: "2026-07-01", product: "Tomate Cerise", supplier: "Coop Souss", weight: 8000, yield: 82, purchasePrice: 0.80, costPrice: 1.84, status: "Terminé", destination: "France (Rungis)", packingCost: 0.38, laborHours: 32, freightCost: 0.75 },
-    { code: "L-2607B", date: "2026-07-02", product: "Haricot Vert", supplier: "AgroAtlas", weight: 6500, yield: 75, purchasePrice: 0.95, costPrice: 2.15, status: "En cours", destination: "Allemagne (Munich)", packingCost: 0.42, laborHours: 28, freightCost: 0.85 },
-    { code: "L-2608A", date: "2026-07-03", product: "Agrumes (Clémentines)", supplier: "Clémentines du Sud", weight: 12000, yield: 88, purchasePrice: 0.70, costPrice: 1.62, status: "Terminé", destination: "Espagne (Barcelone)", packingCost: 0.35, laborHours: 40, freightCost: 0.70 }
+    { code: "L-2607A", date: "2026-07-01", product: "Tomate Cerise", supplier: "Coop Souss", weight: 8000, yield: 82, purchasePrice: 0.80, costPrice: 1.84, status: "Terminé", destination: "France (Rungis)", packingCost: 0.38, laborHours: 32, freightCost: 0.75, step: 6 },
+    { code: "L-2607B", date: "2026-07-02", product: "Haricot Vert", supplier: "AgroAtlas", weight: 6500, yield: 75, purchasePrice: 0.95, costPrice: 2.15, status: "En cours", destination: "Allemagne (Munich)", packingCost: 0.42, laborHours: 28, freightCost: 0.85, step: 3 },
+    { code: "L-2608A", date: "2026-07-03", product: "Agrumes (Clémentines)", supplier: "Clémentines du Sud", weight: 12000, yield: 88, purchasePrice: 0.70, costPrice: 1.62, status: "Terminé", destination: "Espagne (Barcelone)", packingCost: 0.35, laborHours: 40, freightCost: 0.70, step: 5 }
 ];
 
 const DEFAULT_LOGS = [
@@ -587,20 +587,99 @@ function renderLogs() {
     `).join('');
 }
 
+const WORKFLOW_STEPS = [
+    { step: 1, label: "Réception & Agréage", desc: "Agréage qualitatif et pesée brute de l'apport." },
+    { step: 2, label: "Lavage & Nettoyage", desc: "Lavage à l'eau assainissante et traitement fongicide." },
+    { step: 3, label: "Tri & Calibrage", desc: "Élimination des écarts de tri et calibrage mécanique." },
+    { step: 4, label: "Conditionnement / Plastique", desc: "Mise en barquettes plastiques, flowpack et colisage." },
+    { step: 5, label: "Mise en Chambre Froide", desc: "Maintien de la chaîne du froid dans les frigos." },
+    { step: 6, label: "Expédition Export", desc: "Mise en conteneur réfrigéré et export vers l'Europe." }
+];
+
+let activeSelectedLotCode = "L-2607B"; // Lot par défaut
+
 function renderReceptions(lots) {
     const tbody = document.querySelector("#receptions-table tbody");
     if (!tbody) return;
-    tbody.innerHTML = lots.map(l => `
-        <tr>
-            <td style="font-weight:700;">${l.code}</td>
-            <td>${l.date}</td>
-            <td>${l.product}</td>
-            <td>${l.supplier}</td>
-            <td>${l.weight.toLocaleString('fr-FR')} kg</td>
-            <td>${l.purchasePrice.toFixed(2)} €/kg</td>
-            <td><span class="badge-status-table status-completed">Agréé A</span></td>
-        </tr>
-    `).join('');
+    
+    tbody.innerHTML = lots.map(l => {
+        const stepInfo = WORKFLOW_STEPS.find(s => s.step === (l.step || 1));
+        const activeClass = l.code === activeSelectedLotCode ? 'style="background-color: var(--primary-light); cursor:pointer;"' : 'style="cursor:pointer;"';
+        return `
+            <tr ${activeClass} onclick="selectLotForWorkflow('${l.code}')">
+                <td style="font-weight:700;">${l.code}</td>
+                <td>${l.date}</td>
+                <td>${l.product}</td>
+                <td>${l.supplier}</td>
+                <td>${l.weight.toLocaleString('fr-FR')} kg</td>
+                <td><span class="badge-status-table status-processing">${stepInfo.label}</span></td>
+                <td><span class="badge-status-table status-completed">Agréé A</span></td>
+            </tr>
+        `;
+    }).join('');
+
+    renderWorkflowVisualizer(lots);
+}
+
+function selectLotForWorkflow(code) {
+    activeSelectedLotCode = code;
+    const lots = getLots();
+    renderReceptions(lots);
+}
+
+function renderWorkflowVisualizer(lots) {
+    const visualizer = document.getElementById("workflow-visualizer");
+    const nextBtn = document.getElementById("btn-next-step");
+    const statusText = document.getElementById("workflow-status-text");
+    if (!visualizer) return;
+
+    const lot = lots.find(l => l.code === activeSelectedLotCode);
+    if (!lot) {
+        visualizer.innerHTML = "";
+        if (nextBtn) nextBtn.disabled = true;
+        return;
+    }
+
+    const currentStep = lot.step || 1;
+
+    visualizer.innerHTML = WORKFLOW_STEPS.map(s => {
+        let stateClass = "";
+        if (s.step === currentStep) stateClass = "active";
+        else if (s.step < currentStep) stateClass = "completed";
+        return `
+            <div class="step-item ${stateClass}" onclick="setLotStep('${lot.code}', ${s.step})">
+                <div class="step-circle">${s.step === currentStep ? '✓' : s.step}</div>
+                <div class="step-label">${s.label}</div>
+            </div>
+        `;
+    }).join('');
+
+    const currentStepInfo = WORKFLOW_STEPS.find(s => s.step === currentStep);
+    statusText.innerHTML = `Lot sélectionné : <strong>${lot.code} (${lot.product})</strong> | Étape : <strong>${currentStepInfo.label}</strong> - <em>${currentStepInfo.desc}</em>`;
+
+    if (nextBtn) {
+        nextBtn.disabled = currentStep >= 6;
+        nextBtn.onclick = () => {
+            if (currentStep < 6) {
+                setLotStep(lot.code, currentStep + 1);
+            }
+        };
+    }
+}
+
+function setLotStep(code, stepNum) {
+    const lots = getLots();
+    const lot = lots.find(l => l.code === code);
+    if (lot) {
+        lot.step = stepNum;
+        
+        // Logs d'activités automatiques de station
+        const stepLabels = ["réceptionné", "lavé & désinfecté", "trié (écart de tri validé)", "conditionné sous plastique", "placé en chambre froide", "expédié vers l'Europe"];
+        addLog("info", `Lot ${lot.code} (${lot.product}) : ${stepLabels[stepNum - 1]}.`);
+        
+        saveLots(lots);
+        renderAllData();
+    }
 }
 
 function renderFournisseurs() {
