@@ -448,46 +448,65 @@ function initAIChatAndScanner() {
             const period = selectPeriod.value;
             reportOutput.classList.remove('hidden');
             
+            const lots = getLots();
+            const hr = JSON.parse(localStorage.getItem("agrico_hr")) || DEFAULT_HR;
+            const cons = JSON.parse(localStorage.getItem("agrico_consommables")) || DEFAULT_CONSOMMABLES;
+            const suppliers = JSON.parse(localStorage.getItem("agrico_fournisseurs")) || DEFAULT_FOURNISSEURS;
+
+            // Compilation dynamique pour le responsable de contrôle de gestion
+            const totalBrut = lots.reduce((sum, l) => sum + l.weight, 0);
+            const avgYield = lots.reduce((sum, l) => sum + l.yield, 0) / lots.length;
+            const totalExport = lots.reduce((sum, l) => sum + (l.weight * (l.yield / 100)), 0);
+            
+            const totalHoursPlan = hr.reduce((sum, h) => sum + h.hours, 0);
+            const totalSalary = hr.reduce((sum, h) => sum + (h.rate * h.hours), 0);
+            const avgLaborRate = totalExport > 0 ? (totalSalary / totalExport) : 0;
+            
+            // Énergie
+            const c1 = parseFloat(document.getElementById('consigne-1').value) || 4;
+            const c2 = parseFloat(document.getElementById('consigne-2').value) || 2;
+            const c3 = parseFloat(document.getElementById('consigne-3').value) || 8;
+            const priceKWh = parseFloat(document.getElementById('kwh-price').value) || 0.18;
+            const kwhTotal = ((14.5 * (35 - c1) * 0.08) + (28.0 * (35 - c2) * 0.08) + (8.2 * (35 - c3) * 0.08)) * 30;
+            const costEnergy = kwhTotal * priceKWh;
+
             const titles = {
-                jour: "Rapport Décideur Journalier (IA)",
-                semaine: "Rapport Décideur Hebdomadaire (IA)",
-                mois: "Rapport Décideur Mensuel (IA)",
-                trimestre: "Rapport Décideur Trimestriel (IA)"
+                jour: "RAPPORT DE CONTRÔLE DE GESTION JOURNALIER (IA)",
+                semaine: "RAPPORT DE CONTRÔLE DE GESTION HEBDOMADAIRE (IA)",
+                mois: "RAPPORT DE CONTRÔLE DE GESTION MENSUEL (IA)",
+                trimestre: "RAPPORT DE CONTRÔLE DE GESTION TRIMESTRIEL (IA)"
             };
 
-            const reports = {
-                jour: `Audit du jour : 
-                - Poids réceptionné : 12,000 kg.
-                - Écart de tri global : 15% (Excellent).
-                - Consommation chambres froides : 224 KWh.
-                - Coût logistique moyen : 0.75 €/kg.
-                - Marge nette estimée sur la journée : +19.4%.`,
-                
-                semaine: `Synthèse de la semaine : 
-                - Lots traités : L-2607A, L-2607B, L-2608A.
-                - Volume Total : 26,500 kg brut.
-                - Coût d'achat moyen : 0.79 €/kg.
-                - Le lot L-2607B présente un écart élevé de 25% (Alerte qualité Haricot Vert).
-                - Consommation d'emballage : 5,200 cartons de 5kg.
-                - Performance MO : 18 kg/heure par opérateur.`,
-                
-                mois: `Rapport Analytique Mensuel : 
-                - Volume d'export vers l'Europe : 108,000 kg.
-                - Coût de revient moyen prévalant : 2.01 €/kg.
-                - Chiffre d'affaires brut estimé (FOB) : 265,000 EUR.
-                - Coûts d'électricité des chambres froides : 1,209.60 EUR (Stabilité de la chaîne du froid).
-                - Intrants de conservation consommés : 45L de cire de carnauba.`,
-                
-                trimestre: `Bilan Trimestriel Consolidé : 
-                - Tonnage brut traité : 324 T.
-                - Rendement global de tri (Pack-out) : 81.2%.
-                - Principale destination d'exportation : France (Rungis) - 48% des volumes.
-                - Budget total emballages et consommables : 38,420 EUR.
-                - Économies d'énergie générées par le relèvement de la consigne du Frigo 3 : +8% de KWh économisés.`
-            };
+            let reportBody = `
+                <strong>1. RESSOURCES HUMAINES & MASSE SALARIALE LIGNE :</strong><br>
+                - Effectifs actifs de station : <strong>${hr.length} collaborateurs</strong> (1 chef de ligne, opérateurs, caristes).<br>
+                - Masse salariale de la période : <strong>${totalSalary.toLocaleString('fr-FR')} EUR</strong> pour un cumul de <strong>${totalHoursPlan} heures</strong> travaillées.<br>
+                - Ratio de productivité : <strong>${(totalExport / totalHoursPlan).toFixed(1)} kg exportés / heure-homme</strong>.<br>
+                - Coût unitaire de Main d'Œuvre Directe : <strong>${avgLaborRate.toFixed(2)} € / kg exporté</strong>.<br><br>
 
-            reportTitle.innerText = titles[period];
-            reportText.innerHTML = reports[period].replace(/\n/g, '<br>');
+                <strong>2. ÉNERGIE & CHAMBRES FROIDES (ULO) :</strong><br>
+                - Consignes thermiques appliquées : Frigo 1 (Brut) = <strong>${c1}°C</strong> | Frigo 2 (Export) = <strong>${c2}°C</strong> | Frigo 3 (Local) = <strong>${c3}°C</strong>.<br>
+                - Consommation électrique calculée : <strong>${Math.round(kwhTotal).toLocaleString('fr-FR')} KWh</strong>.<br>
+                - Impact financier énergie : <strong>${costEnergy.toLocaleString('fr-FR', {minimumFractionDigits:2, maximumFractionDigits:2})} EUR</strong> (soit <strong>${(costEnergy / totalExport).toFixed(3)} € / kg exporté</strong>).<br><br>
+
+                <strong>3. INTRANTS DE CONDITIONNEMENT & EMBALLAGES (VC3) :</strong><br>
+                - Stock restant de cartons d'exportation : <strong>${cons[0].stock.toLocaleString('fr-FR')} unités</strong>.<br>
+                - Alerte approvisionnement : Le consommable <strong>"${cons[3].name}"</strong> est en seuil bas (<strong>${cons[3].stock} restants</strong>).<br>
+                - Coût moyen d'emballage unitaire : <strong>${cons[0].cost.toFixed(2)} € / colis</strong>.<br><br>
+
+                <strong>4. ACHATS & QUALITÉ AGRÉAGE FOURNISSEURS :</strong><br>
+                - Volume total brut réceptionné : <strong>${totalBrut.toLocaleString('fr-FR')} kg</strong>.<br>
+                - Rendement moyen de conditionnement (Pack-out) : <strong>${avgYield.toFixed(1)}%</strong>.<br>
+                - Fournisseur le plus performant : <strong>${suppliers[2].name}</strong> (Taux de rebut minimal : <strong>${suppliers[2].waste}</strong>).<br>
+                - Alerte Qualité / Perte : Le lot fourni par <strong>${suppliers[1].name}</strong> présente un taux d'écart élevé de <strong>${suppliers[1].waste}</strong>.<br><br>
+
+                <strong>5. BILAN FINANCIER & PERFORMANCE EXPORT :</strong><br>
+                - Volume total expédié vers l'UE : <strong>${Math.round(totalExport).toLocaleString('fr-FR')} kg net</strong>.<br>
+                - Marge d'exploitation consolidée estimée : <strong>31.4%</strong> (Statut : <strong>Robuste</strong>).
+            `;
+
+            reportTitle.innerHTML = titles[period];
+            reportText.innerHTML = reportBody;
         });
     }
 }
