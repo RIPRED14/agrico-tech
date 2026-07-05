@@ -120,16 +120,14 @@
                                 <h3 class="kpi-value" id="kpi-yield">31.4%</h3>
                                 <span class="kpi-trend trend-positive">Robuste (Cible > 25%)</span>
                             </div>
-                        </div>
-
-                        <div class="kpi-card">
+                                           <div class="kpi-card">
                             <div class="kpi-icon-wrapper color-blue">
-                                <i data-lucide="box"></i>
+                                <i data-lucide="package"></i>
                             </div>
                             <div class="kpi-data">
-                                <span class="kpi-title">VC3 (Emballages unitaire)</span>
-                                <h3 class="kpi-value" id="kpi-packing">0.19 €<span class="unit">/colis</span></h3>
-                                <span class="kpi-trend trend-stable">Dans le budget Cigar Box</span>
+                                <span class="kpi-title">Consommables / Kg</span>
+                                <h3 class="kpi-value" id="kpi-packing">4.18 <span class="unit">MAD/kg</span></h3>
+                                <span class="kpi-trend trend-stable">Dans la cible budgétaire</span>
                             </div>
                         </div>
 
@@ -138,9 +136,9 @@
                                 <i data-lucide="zap"></i>
                             </div>
                             <div class="kpi-data">
-                                <span class="kpi-title">VC2 (Énergie & Vapeur)</span>
-                                <h3 class="kpi-value" id="kpi-logistics">46.50 €<span class="unit">/h</span></h3>
-                                <span class="kpi-trend trend-stable">Optimisation ULO active</span>
+                                <span class="kpi-title">Coût Électrique Frigo</span>
+                                <h3 class="kpi-value" id="kpi-logistics">0.55 <span class="unit">MAD/kg</span></h3>
+                                <span class="kpi-trend trend-negative"><i data-lucide="alert-triangle"></i> Pic tarifaire ONEE</span>
                             </div>
                         </div>
 
@@ -149,54 +147,54 @@
                                 <i data-lucide="dollar-sign"></i>
                             </div>
                             <div class="kpi-data">
-                                <span class="kpi-title">VC4 (Fret & Transit)</span>
-                                <h3 class="kpi-value" id="kpi-cost-price">0.75 €<span class="unit">/kg</span></h3>
-                                <span class="kpi-trend trend-positive">Incoterm C&F réglé</span>
+                                <span class="kpi-title">Coût de Revient Moyen</span>
+                                <h3 class="kpi-value" id="kpi-cost-price">22.10 <span class="unit">MAD/kg</span></h3>
+                                <span class="kpi-trend trend-positive">Fret compris</span>
                             </div>
                         </div>
 
                         <!-- Simulator Card (Cigar Box Model) -->
                         <div class="card col-span-3 simulator-card">
                             <div class="card-header">
-                                <h2>Simulateur Analytique CIGAR BOX (ITC Standards)</h2>
-                                <span class="badge badge-interactive">Modélisation Financière CB1</span>
+                                <h2>Simulateur Analytique de Réemballage (Standards Maroc/Export)</h2>
+                                <span class="badge badge-interactive">Modélisation Financière MAD</span>
                             </div>
                             <div class="card-body simulator-container">
                                 <div class="simulator-controls">
                                     <div class="form-group">
                                         <label for="cb-product-select">Sélectionner un Produit de Référence</label>
                                         <select id="cb-product-select">
-                                            <option value="pomme">Jus de Pomme Concentré 70 Brix</option>
-                                            <option value="mangue" selected>Purée de Mangue 28 Brix (Double Force)</option>
-                                            <option value="jus">Jus de Fruits (100% à base de concentré)</option>
-                                            <option value="noyer">Conserves de Noyer Vert Bio</option>
-                                            <option value="pois">Petits Pois en Conserve 340ml</option>
-                                            <option value="surgeles">Mélange de Maïs et Pois Doux Congelés (IQF)</option>
+                                            <option value="pomme">Tomate Cerise (Barquette 250g)</option>
+                                            <option value="mangue" selected>Blueberries / Myrtilles (Raviers Plastique)</option>
+                                            <option value="jus">Concombres (Sous Film Thermo)</option>
+                                            <option value="noyer">Haricots Verts (Sachet Gaze 500g)</option>
+                                            <option value="pois">Courgettes (Colis Vrac Carton)</option>
+                                            <option value="surgeles">Agrumes / Clémentines (Filet Girsac)</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="cb-tech-select">Niveau Technologique de la Station</label>
                                         <select id="cb-tech-select">
-                                            <option value="artisan">Artisanal (Rendement bas / PR élevé)</option>
-                                            <option value="semi-industrial" selected>Semi-Industriel (Rendement moyen / PR moyen)</option>
-                                            <option value="industrial">Industriel (Équipement lourd / PR bas)</option>
+                                            <option value="artisan">Artisanal (Tri manuel / Rendement bas)</option>
+                                            <option value="semi-industrial" selected>Semi-Industriel (Ligne semi-automatique / Calibreuse)</option>
+                                            <option value="industrial">Industriel (Optique / Tri auto / Rendement optimal)</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="cb-selling-price">Prix de Vente C&F ($ / Tonne)</label>
-                                        <input type="number" id="cb-selling-price" value="1000" step="50">
+                                        <label for="cb-selling-price">Prix de Vente C&F (MAD / Tonne)</label>
+                                        <input type="number" id="cb-selling-price" value="10000" step="500">
                                     </div>
                                     <div class="form-group">
-                                        <label for="cb-rm-price">Prix Achat Matière Première (RM) ($ / Tonne)</label>
-                                        <input type="number" id="cb-rm-price" value="100" step="5">
+                                        <label for="cb-rm-price">Prix Achat Matière Première (RM) (MAD / Tonne)</label>
+                                        <input type="number" id="cb-rm-price" value="1000" step="50">
                                     </div>
                                     <div class="form-group">
-                                        <label for="cb-fixed-costs">Coûts Fixes (FC) Annuels ($)</label>
-                                        <input type="number" id="cb-fixed-costs" value="423886" step="5000">
+                                        <label for="cb-fixed-costs">Coûts Fixes (FC) Annuels (MAD)</label>
+                                        <input type="number" id="cb-fixed-costs" value="4238860" step="50000">
                                     </div>
                                     <div class="form-group">
                                         <label for="cb-qty-sold">Quantité vendue q (Tonnes)</label>
-                                        <input type="number" id="cb-qty-sold" value="2000" step="100">
+                                        <input type="number" id="cb-qty-sold" value="200" step="10">
                                     </div>
                                 </div>
                                 <div class="simulator-results">
@@ -216,19 +214,20 @@
                                     <div class="cost-summary">
                                         <div class="summary-line highlight">
                                             <span>Seuil de Rentabilité (Ventes) :</span>
-                                            <span id="res-cb-be-sales">1,420 Tonnes</span>
+                                            <span id="res-cb-be-sales">142 Tonnes</span>
                                         </div>
                                         <div class="summary-line">
                                             <span>Seuil de Rentabilité (Matière Première RM) :</span>
-                                            <span id="res-cb-be-rm">4,062 Tonnes</span>
+                                            <span id="res-cb-be-rm">406 Tonnes</span>
                                         </div>
                                         <div class="summary-line">
-                                            <span>Résultat Net de l'Exercice (EAT) :</span>
-                                            <span id="res-cb-net-profit" style="font-weight:700; color:#166534;">+86,481.00 USD</span>
+                                            <span>Résultat Net de l'Exercice (MAD) :</span>
+                                            <span id="res-cb-net-profit" style="font-weight:700; color:#166534;">+86,481.00 MAD</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>         </div>
                         </div>
 
                         <!-- System Logs Activity Feed -->
@@ -433,7 +432,7 @@
                                 <div class="frigo-stats">
                                     <div class="stat-line"><span>Volume Stocké :</span> <strong>14.5 T</strong></div>
                                     <div class="stat-line"><span>Puissance Estimée :</span> <strong>24 KW</strong></div>
-                                    <div class="stat-line highlight"><span>Coût Électrique Jour :</span> <strong id="cost-frigo-1">11.50 €</strong></div>
+                                    <div class="stat-line highlight"><span>Coût Électrique Jour :</span> <strong id="cost-frigo-1">115.00 MAD</strong></div>
                                 </div>
                             </div>
                         </div>
@@ -455,7 +454,7 @@
                                 <div class="frigo-stats">
                                     <div class="stat-line"><span>Volume Stocké :</span> <strong>28.0 T</strong></div>
                                     <div class="stat-line"><span>Puissance Estimée :</span> <strong>35 KW</strong></div>
-                                    <div class="stat-line highlight"><span>Coût Électrique Jour :</span> <strong id="cost-frigo-2">22.40 €</strong></div>
+                                    <div class="stat-line highlight"><span>Coût Électrique Jour :</span> <strong id="cost-frigo-2">224.00 MAD</strong></div>
                                 </div>
                             </div>
                         </div>
@@ -477,7 +476,7 @@
                                 <div class="frigo-stats">
                                     <div class="stat-line"><span>Volume Stocké :</span> <strong>8.2 T</strong></div>
                                     <div class="stat-line"><span>Puissance Estimée :</span> <strong>12 KW</strong></div>
-                                    <div class="stat-line highlight"><span>Coût Électrique Jour :</span> <strong id="cost-frigo-3">5.20 €</strong></div>
+                                    <div class="stat-line highlight"><span>Coût Électrique Jour :</span> <strong id="cost-frigo-3">52.00 MAD</strong></div>
                                 </div>
                             </div>
                         </div>
@@ -490,8 +489,8 @@
                             <div class="card-body">
                                 <div class="simulator-container">
                                     <div class="form-group">
-                                        <label for="kwh-price">Tarif Moyen Électricité (EUR / KWh)</label>
-                                        <input type="number" id="kwh-price" value="0.18" step="0.01">
+                                        <label for="kwh-price">Tarif Moyen Électricité (MAD / KWh)</label>
+                                        <input type="number" id="kwh-price" value="1.18" step="0.05">
                                     </div>
                                     <div class="cost-summary">
                                         <div class="summary-line highlight">
@@ -500,7 +499,7 @@
                                         </div>
                                         <div class="summary-line">
                                             <span>Budget Électrique chambres froides estimé (Mois) :</span>
-                                            <span id="res-total-energy-cost">1,209.60 €</span>
+                                            <span id="res-total-energy-cost">7,929.60 MAD</span>
                                         </div>
                                     </div>
                                 </div>
@@ -524,7 +523,7 @@
                                             <th>Destination</th>
                                             <th>Commandes En cours</th>
                                             <th>Volume Commandé</th>
-                                            <th>Montant Facturé H.T.</th>
+                                            <th>Montant Facturé H.T. (MAD)</th>
                                             <th>État Encaissement</th>
                                         </tr>
                                     </thead>
@@ -551,7 +550,7 @@
                                             <th>Code Lot</th>
                                             <th>Destination</th>
                                             <th>Poids Net Exporté</th>
-                                            <th>Fret & Logistique (€)</th>
+                                            <th>Fret & Logistique (MAD)</th>
                                             <th>Coût Transit & Douane</th>
                                             <th>Statut Expédition</th>
                                         </tr>
@@ -578,9 +577,9 @@
                                         <tr>
                                             <th>Collaborateur</th>
                                             <th>Poste Ligne</th>
-                                            <th>Taux Horaire (€/h)</th>
+                                            <th>Taux Horaire (MAD/h)</th>
                                             <th>Heures Planifiées</th>
-                                            <th>Paie Estimée</th>
+                                            <th>Paie Estimée (MAD)</th>
                                             <th>Statut Validation</th>
                                         </tr>
                                     </thead>
@@ -597,7 +596,7 @@
                 <section class="view-section" id="view-costs">
                     <div class="card">
                         <div class="card-header">
-                            <h2>Bilan Financier & Coût de Revient (Cigar Box Standard)</h2>
+                            <h2>Bilan Financier & Coût de Revient (MAD Standard)</h2>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -605,12 +604,12 @@
                                     <thead>
                                         <tr>
                                             <th>Code Lot</th>
-                                            <th>VC1 (Matière €)</th>
-                                            <th>VC2 (Transfo €)</th>
-                                            <th>VC3 (Emballages €)</th>
-                                            <th>VC4 (Livraison/Fret €)</th>
-                                            <th>Coût Revient Global EXW</th>
-                                            <th>Marge Estimée</th>
+                                            <th>VC1 (Matière MAD)</th>
+                                            <th>VC2 (Transfo MAD)</th>
+                                            <th>VC3 (Emballages MAD)</th>
+                                            <th>VC4 (Livraison/Fret MAD)</th>
+                                            <th>Coût Revient Global EXW (MAD/Kg)</th>
+                                            <th>Marge Estimée (MAD)</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -662,7 +661,7 @@
                                     Bonjour, pouvez-vous me faire une analyse des écarts de tri et de la facture d'électricité ?
                                 </div>
                                 <div class="ai-msg bot-msg bg-emerald-50 text-emerald-800 border border-emerald-100 p-3 rounded-lg max-w-[80%] self-start">
-                                    Bonjour Hamza. D'après l'analyse des données de tri, le lot **L-2607B (Haricot Vert)** présente le taux d'écart le plus élevé (25%). Cela augmente le coût matière réel de 0.95 €/kg à 1.27 €/kg. Concernant la facture d'électricité, les vannes de la chambre 2 (Produits finis) sont sur-sollicitées en raison d'une consigne basse de 2°C.
+                                    Bonjour Hamza. D'après l'analyse des données de tri, le lot **L-2607B (Haricot Vert)** présente le taux d'écart le plus élevé (25%). Cela augmente le coût matière réel de 9.50 MAD/kg à 12.70 MAD/kg. Concernant la facture d'électricité, les vannes de la chambre 2 (Produits finis) sont sur-sollicitées en raison d'une consigne basse de 2°C.
                                 </div>
                             </div>
                             <div class="p-4 border-t flex gap-2">
@@ -737,8 +736,8 @@
                     <input type="number" id="lot-weight" value="5000" required>
                 </div>
                 <div class="form-group">
-                    <label for="lot-price">Prix Achat convenu (€/Kg)</label>
-                    <input type="number" id="lot-price" value="0.75" step="0.01" required>
+                    <label for="lot-price">Prix Achat convenu (MAD/Kg)</label>
+                    <input type="number" id="lot-price" value="7.50" step="0.10" required>
                 </div>
                 <div class="form-group">
                     <label for="lot-supplier">Fournisseur / Coopérative</label>

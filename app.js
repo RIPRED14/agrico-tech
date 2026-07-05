@@ -11,57 +11,57 @@ document.addEventListener("DOMContentLoaded", () => {
     initModalEvents();
 });
 
-// Produits modèles Cigar Box (Standards ITC)
+// Produits modèles Cigar Box (Standards ITC transcrits en MAD)
 const CIGAR_BOX_PRODUCTS = {
     pomme: {
-        name: "Jus de Pomme Concentré 70 Brix",
-        prices: { C_F: 1200, EXW: 772, RM: 45 },
-        pr: { artisan: 11.0, "semi-industrial": 8.0, industrial: 6.0 },
-        vc: { vc1: 460, vc2: 58, vc3: 92, vc4: 236 },
-        fc: 446200
+        name: "Tomate Cerise (Barquette 250g)",
+        prices: { C_F: 12000, EXW: 7720, RM: 450 },
+        pr: { artisan: 1.15, "semi-industrial": 1.05, industrial: 1.01 },
+        vc: { vc1: 4600, vc2: 580, vc3: 920, vc4: 2360 },
+        fc: 4462000
     },
     mangue: {
-        name: "Purée de Mangue 28 Brix (Double Force)",
-        prices: { C_F: 1000, EXW: 544, RM: 100 },
-        pr: { artisan: 3.5, "semi-industrial": 2.86, industrial: 2.2 },
-        vc: { vc1: 286, vc2: 23, vc3: 85, vc4: 280 },
-        fc: 211943
+        name: "Blueberries / Myrtilles (Raviers Plastique)",
+        prices: { C_F: 10000, EXW: 5440, RM: 1000 },
+        pr: { artisan: 1.12, "semi-industrial": 1.06, industrial: 1.02 },
+        vc: { vc1: 2860, vc2: 230, vc3: 850, vc4: 2800 },
+        fc: 2119430
     },
     jus: {
-        name: "Jus de Fruits (100% à base de concentré)",
-        prices: { C_F: 985, EXW: 746, RM: 600 },
-        pr: { artisan: 0.45, "semi-industrial": 0.38, industrial: 0.30 },
-        vc: { vc1: 305, vc2: 72, vc3: 122, vc4: 75 },
-        fc: 1037600
+        name: "Concombres (Sous Film Thermo)",
+        prices: { C_F: 9850, EXW: 7460, RM: 6000 },
+        pr: { artisan: 1.10, "semi-industrial": 1.04, industrial: 1.01 },
+        vc: { vc1: 3050, vc2: 720, vc3: 1220, vc4: 750 },
+        fc: 10376000
     },
     noyer: {
-        name: "Conserves de Noyer Vert Bio",
-        prices: { C_F: 4980, EXW: 3568, RM: 883 },
-        pr: { artisan: 0.70, "semi-industrial": 0.59, industrial: 0.48 },
-        vc: { vc1: 799, vc2: 162, vc3: 405, vc4: 582 },
-        fc: 742400
+        name: "Haricots Verts (Sachet Gaze 500g)",
+        prices: { C_F: 49800, EXW: 35680, RM: 8830 },
+        pr: { artisan: 1.25, "semi-industrial": 1.15, industrial: 1.08 },
+        vc: { vc1: 7990, vc2: 1620, vc3: 4050, vc4: 5820 },
+        fc: 7424000
     },
     pois: {
-        name: "Petits Pois en Conserve 340ml",
-        prices: { C_F: 400, EXW: 283, RM: 190 },
-        pr: { artisan: 0.95, "semi-industrial": 0.80, industrial: 0.68 },
-        vc: { vc1: 175, vc2: 30, vc3: 40, vc4: 50 },
-        fc: 490000
+        name: "Courgettes (Colis Vrac Carton)",
+        prices: { C_F: 4000, EXW: 2830, RM: 1900 },
+        pr: { artisan: 1.18, "semi-industrial": 1.10, industrial: 1.04 },
+        vc: { vc1: 1750, vc2: 300, vc3: 400, vc4: 500 },
+        fc: 4900000
     },
     surgeles: {
-        name: "Mélange de Maïs et Pois Doux Congelés (IQF)",
-        prices: { C_F: 1000, EXW: 783, RM: 280 },
-        pr: { artisan: 1.55, "semi-industrial": 1.30, industrial: 1.10 },
-        vc: { vc1: 385, vc2: 96, vc3: 100, vc4: 50 },
-        fc: 466000
+        name: "Agrumes / Clémentines (Filet Girsac)",
+        prices: { C_F: 10000, EXW: 7830, RM: 2800 },
+        pr: { artisan: 1.35, "semi-industrial": 1.20, industrial: 1.12 },
+        vc: { vc1: 3850, vc2: 960, vc3: 1000, vc4: 500 },
+        fc: 4660000
     }
 };
 
 // Structure par défaut de la base de données
 const DEFAULT_LOTS = [
-    { code: "L-2607A", date: "2026-07-01", product: "Tomate Cerise", supplier: "Coop Souss", weight: 8000, yield: 82, purchasePrice: 0.80, costPrice: 1.84, status: "Terminé", destination: "France (Rungis)", packingCost: 0.38, laborHours: 32, freightCost: 0.75, step: 6 },
-    { code: "L-2607B", date: "2026-07-02", product: "Haricot Vert", supplier: "AgroAtlas", weight: 6500, yield: 75, purchasePrice: 0.95, costPrice: 2.15, status: "En cours", destination: "Allemagne (Munich)", packingCost: 0.42, laborHours: 28, freightCost: 0.85, step: 3 },
-    { code: "L-2608A", date: "2026-07-03", product: "Agrumes (Clémentines)", supplier: "Clémentines du Sud", weight: 12000, yield: 88, purchasePrice: 0.70, costPrice: 1.62, status: "Terminé", destination: "Espagne (Barcelone)", packingCost: 0.35, laborHours: 40, freightCost: 0.70, step: 5 }
+    { code: "L-2607A", date: "2026-07-01", product: "Tomate Cerise", supplier: "Coop Souss", weight: 8000, yield: 82, purchasePrice: 8.00, costPrice: 18.40, status: "Terminé", destination: "France (Rungis)", packingCost: 3.80, laborHours: 32, freightCost: 7.50, step: 6 },
+    { code: "L-2607B", date: "2026-07-02", product: "Haricot Vert", supplier: "AgroAtlas", weight: 6500, yield: 75, purchasePrice: 9.50, costPrice: 21.50, status: "En cours", destination: "Allemagne (Munich)", packingCost: 4.20, laborHours: 28, freightCost: 8.50, step: 3 },
+    { code: "L-2608A", date: "2026-07-03", product: "Agrumes (Clémentines)", supplier: "Clémentines du Sud", weight: 12000, yield: 88, purchasePrice: 7.00, costPrice: 16.20, status: "Terminé", destination: "Espagne (Barcelone)", packingCost: 3.50, laborHours: 40, freightCost: 7.00, step: 5 }
 ];
 
 const DEFAULT_LOGS = [
@@ -72,16 +72,16 @@ const DEFAULT_LOGS = [
 ];
 
 const DEFAULT_CONSOMMABLES = [
-    { name: "Cartons Export 5Kg (VC3)", usage: "Colisage principal", cost: 0.25, stock: 12400, status: "Optimal" },
-    { name: "Palettes Europe (Bois) (VC3)", usage: "Palettisation", cost: 12.00, stock: 450, status: "Optimal" },
-    { name: "Barquettes Plastiques 250g (VC3)", usage: "Conditionnement unitaire", cost: 0.08, stock: 42000, status: "Optimal" },
-    { name: "Cornières & Films (VC3)", usage: "Fardelage", cost: 0.05, stock: 1500, status: "Seuil Bas" }
+    { name: "Cartons Export 5Kg (VC3)", usage: "Colisage principal", cost: 2.50, stock: 12400, status: "Optimal" },
+    { name: "Palettes Europe (Bois) (VC3)", usage: "Palettisation", cost: 120.00, stock: 450, status: "Optimal" },
+    { name: "Barquettes Plastiques 250g (VC3)", usage: "Conditionnement unitaire", cost: 0.80, stock: 42000, status: "Optimal" },
+    { name: "Cornières & Films (VC3)", usage: "Fardelage", cost: 0.50, stock: 1500, status: "Seuil Bas" }
 ];
 
 const DEFAULT_TRAITEMENTS = [
-    { name: "Cire de carnauba (Citrosol) (VC1)", usage: "Enrobage agrumes", dosage: "1.2 L / Tonne", cost: 6.50 },
-    { name: "Fludioxonil (Fongicide) (VC1)", usage: "Traitement post-récolte", dosage: "300 ml / 100 L", cost: 45.00 },
-    { name: "Solution assainissante (VC1)", usage: "Désinfection eau lavage", dosage: "50 ppm", cost: 2.20 }
+    { name: "Cire de carnauba (Citrosol) (VC1)", usage: "Enrobage agrumes", dosage: "1.2 L / Tonne", cost: 65.00 },
+    { name: "Fludioxonil (Fongicide) (VC1)", usage: "Traitement post-récolte", dosage: "300 ml / 100 L", cost: 450.00 },
+    { name: "Solution assainissante (VC1)", usage: "Désinfection eau lavage", dosage: "50 ppm", cost: 22.00 }
 ];
 
 const DEFAULT_FOURNISSEURS = [
@@ -92,16 +92,16 @@ const DEFAULT_FOURNISSEURS = [
 ];
 
 const DEFAULT_CLIENTS = [
-    { name: "EuroFood Rungis", destination: "France", activeOrders: 2, volume: "45 Tonnes", billing: "98,500 EUR", status: "Réglé" },
-    { name: "Munich Fresh Fruit", destination: "Allemagne", activeOrders: 1, volume: "22 Tonnes", billing: "48,200 EUR", status: "Attente" },
-    { name: "Mercabarna Import", destination: "Espagne", activeOrders: 3, volume: "64 Tonnes", billing: "128,400 EUR", status: "Réglé" }
+    { name: "EuroFood Rungis", destination: "France", activeOrders: 2, volume: "45 Tonnes", billing: "985,000 MAD", status: "Réglé" },
+    { name: "Munich Fresh Fruit", destination: "Allemagne", activeOrders: 1, volume: "22 Tonnes", billing: "482,000 MAD", status: "Attente" },
+    { name: "Mercabarna Import", destination: "Espagne", activeOrders: 3, volume: "64 Tonnes", billing: "1,284,000 MAD", status: "Réglé" }
 ];
 
 const DEFAULT_HR = [
-    { name: "Yassine El Fassi", role: "Chef de Ligne de Tri", rate: 18.50, hours: 160, salary: "2,960.00 EUR", status: "Validé" },
-    { name: "Amina Aït Ali", role: "Opérateur de Calibrage", rate: 12.00, hours: 155, salary: "1,860.00 EUR", status: "Validé" },
-    { name: "Khadija Soussi", role: "Opérateur de Conditionnement", rate: 12.00, hours: 162, salary: "1,944.00 EUR", status: "En cours" },
-    { name: "Rachid Idrissi", role: "Cariste / Frigoriste", rate: 15.00, hours: 158, salary: "2,370.00 EUR", status: "Validé" }
+    { name: "Yassine El Fassi", role: "Chef de Ligne de Tri", rate: 18.50, hours: 160, salary: "2,960.00 MAD", status: "Validé" },
+    { name: "Amina Aït Ali", role: "Opérateur de Calibrage", rate: 12.00, hours: 155, salary: "1,860.00 MAD", status: "Validé" },
+    { name: "Khadija Soussi", role: "Opérateur de Conditionnement", rate: 12.00, hours: 162, salary: "1,944.00 MAD", status: "En cours" },
+    { name: "Rachid Idrissi", role: "Cariste / Frigoriste", rate: 15.00, hours: 158, salary: "2,370.00 MAD", status: "Validé" }
 ];
 
 function initDB() {
@@ -341,10 +341,10 @@ function updateSimulation() {
     
     const profitEl = document.getElementById('res-cb-net-profit');
     if (netProfit >= 0) {
-        profitEl.innerText = `+${netProfit.toLocaleString('fr-FR', {minimumFractionDigits: 2, maximumFractionDigits: 2})} USD`;
+        profitEl.innerText = `+${netProfit.toLocaleString('fr-FR', {minimumFractionDigits: 2, maximumFractionDigits: 2})} MAD`;
         profitEl.style.color = "#166534";
     } else {
-        profitEl.innerText = `${netProfit.toLocaleString('fr-FR', {minimumFractionDigits: 2, maximumFractionDigits: 2})} USD`;
+        profitEl.innerText = `${netProfit.toLocaleString('fr-FR', {minimumFractionDigits: 2, maximumFractionDigits: 2})} MAD`;
         profitEl.style.color = "#991b1b";
     }
 
@@ -354,7 +354,7 @@ function updateSimulation() {
         costChart.data.datasets[1].data = [vc2];
         costChart.data.datasets[2].data = [vc3];
         costChart.data.datasets[3].data = [vc4];
-        costChart.options.scales.x.max = Math.ceil(cfPrice + 200);
+        costChart.options.scales.x.max = Math.ceil(cfPrice + 2000);
         costChart.update();
     }
 }
@@ -477,22 +477,22 @@ function initAIChatAndScanner() {
                 trimestre: "RAPPORT DE CONTRÔLE DE GESTION TRIMESTRIEL (IA)"
             };
 
-            let reportBody = `
+             let reportBody = `
                 <strong>1. RESSOURCES HUMAINES & MASSE SALARIALE LIGNE :</strong><br>
                 - Effectifs actifs de station : <strong>${hr.length} collaborateurs</strong> (1 chef de ligne, opérateurs, caristes).<br>
-                - Masse salariale de la période : <strong>${totalSalary.toLocaleString('fr-FR')} EUR</strong> pour un cumul de <strong>${totalHoursPlan} heures</strong> travaillées.<br>
+                - Masse salariale de la période : <strong>${totalSalary.toLocaleString('fr-FR')} MAD</strong> pour un cumul de <strong>${totalHoursPlan} heures</strong> travaillées.<br>
                 - Ratio de productivité : <strong>${(totalExport / totalHoursPlan).toFixed(1)} kg exportés / heure-homme</strong>.<br>
-                - Coût unitaire de Main d'Œuvre Directe : <strong>${avgLaborRate.toFixed(2)} € / kg exporté</strong>.<br><br>
+                - Coût unitaire de Main d'Œuvre Directe : <strong>${avgLaborRate.toFixed(2)} MAD / kg exporté</strong>.<br><br>
 
                 <strong>2. ÉNERGIE & CHAMBRES FROIDES (ULO) :</strong><br>
                 - Consignes thermiques appliquées : Frigo 1 (Brut) = <strong>${c1}°C</strong> | Frigo 2 (Export) = <strong>${c2}°C</strong> | Frigo 3 (Local) = <strong>${c3}°C</strong>.<br>
                 - Consommation électrique calculée : <strong>${Math.round(kwhTotal).toLocaleString('fr-FR')} KWh</strong>.<br>
-                - Impact financier énergie : <strong>${costEnergy.toLocaleString('fr-FR', {minimumFractionDigits:2, maximumFractionDigits:2})} EUR</strong> (soit <strong>${(costEnergy / totalExport).toFixed(3)} € / kg exporté</strong>).<br><br>
+                - Impact financier énergie : <strong>${costEnergy.toLocaleString('fr-FR', {minimumFractionDigits:2, maximumFractionDigits:2})} MAD</strong> (soit <strong>${(costEnergy / totalExport).toFixed(3)} MAD / kg exporté</strong>).<br><br>
 
                 <strong>3. INTRANTS DE CONDITIONNEMENT & EMBALLAGES (VC3) :</strong><br>
                 - Stock restant de cartons d'exportation : <strong>${cons[0].stock.toLocaleString('fr-FR')} unités</strong>.<br>
                 - Alerte approvisionnement : Le consommable <strong>"${cons[3].name}"</strong> est en seuil bas (<strong>${cons[3].stock} restants</strong>).<br>
-                - Coût moyen d'emballage unitaire : <strong>${cons[0].cost.toFixed(2)} € / colis</strong>.<br><br>
+                - Coût moyen d'emballage unitaire : <strong>${cons[0].cost.toFixed(2)} MAD / colis</strong>.<br><br>
 
                 <strong>4. ACHATS & QUALITÉ AGRÉAGE FOURNISSEURS :</strong><br>
                 - Volume total brut réceptionné : <strong>${totalBrut.toLocaleString('fr-FR')} kg</strong>.<br>
@@ -530,11 +530,11 @@ function handleChatSubmit() {
         const lower = text.toLowerCase();
         
         if (lower.includes("énergie") || lower.includes("électricité") || lower.includes("kwh")) {
-            reply = "La consommation électrique simulée est de 224 KWh par jour pour l'ensemble des 3 chambres froides, pour un budget mensuel de 1,209.60 EUR. Relever la consigne du frigo 3 (Marché local) à 9°C permettrait d'économiser 5% sur ce poste.";
+            reply = "La consommation électrique simulée est de 224 KWh par jour pour l'ensemble des 3 chambres froides, pour un budget mensuel de 7,929.60 MAD. Relever la consigne du frigo 3 (Marché local) à 9°C permettrait d'économiser 5% sur ce poste.";
         } else if (lower.includes("consommables") || lower.includes("cartons") || lower.includes("stock")) {
             reply = "Le stock de cartons de 5Kg est confortable (12,400 restants), mais les cornières & films étirables sont en seuil bas (1,500 unités restantes). Je vous suggère de passer commande d'un lot de rechange.";
         } else if (lower.includes("marge") || lower.includes("coût de revient")) {
-            reply = "Le coût de revient moyen actuel est de 2.01 €/kg exporté. La marge moyenne observée est de +18% sur le marché de gros européen.";
+            reply = "Le coût de revient moyen actuel est de 20.10 MAD/kg exporté. La marge moyenne observée est de +18% sur le marché de gros européen.";
         } else {
             reply = "Je peux vous fournir l'analyse énergétique en temps réel des chambres froides, le stock de consommables d'emballage (cartons, palettes) ou la rentabilité par lot.";
         }
@@ -571,8 +571,8 @@ function updateKPIs(lots) {
 
     // Convertir de manière représentative pour la marge Cigar Box
     document.getElementById('kpi-yield').innerText = "31.4%";
-    document.getElementById('kpi-packing').innerText = `${avgPacking.toFixed(2)} €/colis`;
-    document.getElementById('kpi-cost-price').innerText = `${avgCost.toFixed(2)} €/kg`;
+    document.getElementById('kpi-packing').innerText = `${avgPacking.toFixed(2)} MAD/colis`;
+    document.getElementById('kpi-cost-price').innerText = `${avgCost.toFixed(2)} MAD/kg`;
 }
 
 function renderLogs() {
@@ -771,8 +771,8 @@ function renderExpeditions(lots) {
                 <td style="font-weight:700;">${l.code}</td>
                 <td>${l.destination || "Europe (Fret)"}</td>
                 <td>${exportWeight.toLocaleString('fr-FR')} kg</td>
-                <td>${(exportWeight * l.freightCost).toLocaleString('fr-FR', {maximumFractionDigits:0})} €</td>
-                <td>0.15 €/kg</td>
+                <td>${(exportWeight * l.freightCost).toLocaleString('fr-FR', {maximumFractionDigits:0})} MAD</td>
+                <td>1.50 MAD/kg</td>
                 <td><span class="badge-status-table ${statusClass}">${l.status}</span></td>
             </tr>
         `;
@@ -787,7 +787,7 @@ function renderHR() {
         <tr>
             <td><strong>${h.name}</strong></td>
             <td>${h.role}</td>
-            <td>${h.rate.toFixed(2)} €/h</td>
+            <td>${h.rate.toFixed(2)} MAD/h</td>
             <td>${h.hours} h</td>
             <td style="font-weight:600;">${h.salary}</td>
             <td><span class="badge-status-table ${h.status === 'Validé' ? 'status-completed' : 'status-processing'}">${h.status}</span></td>
@@ -802,7 +802,7 @@ function renderCosts(lots) {
         const vc1 = l.weight * l.purchasePrice; // Matière brute
         const wasteWeight = l.weight * ((100 - l.yield) / 100);
         const wasteCost = wasteWeight * l.purchasePrice; // Pertes (écart de tri)
-        const vc2 = l.laborHours * 15; // Coût main d'oeuvre variable
+        const vc2 = l.laborHours * 15; // Coût main d'oeuvre variable (15 MAD/h)
         const vc3 = l.weight * l.packingCost; // Emballages
         const vc4 = (l.weight * (l.yield / 100)) * l.freightCost; // Livraison
         
@@ -813,12 +813,12 @@ function renderCosts(lots) {
         return `
             <tr>
                 <td style="font-weight:700;">${l.code}</td>
-                <td>${vc1.toLocaleString('fr-FR', {maximumFractionDigits:0})} €</td>
-                <td>${vc2.toLocaleString('fr-FR', {maximumFractionDigits:0})} €</td>
-                <td>${vc3.toLocaleString('fr-FR', {maximumFractionDigits:0})} €</td>
-                <td>${vc4.toLocaleString('fr-FR', {maximumFractionDigits:0})} €</td>
-                <td style="font-weight:800; color:var(--primary);">${realCostPerKg.toFixed(2)} €/kg</td>
-                <td style="font-weight:700; color:#1e40af;">+${profit.toLocaleString('fr-FR', {maximumFractionDigits:0})} €</td>
+                <td>${vc1.toLocaleString('fr-FR', {maximumFractionDigits:0})} MAD</td>
+                <td>${vc2.toLocaleString('fr-FR', {maximumFractionDigits:0})} MAD</td>
+                <td>${vc3.toLocaleString('fr-FR', {maximumFractionDigits:0})} MAD</td>
+                <td>${vc4.toLocaleString('fr-FR', {maximumFractionDigits:0})} MAD</td>
+                <td style="font-weight:800; color:var(--primary);">${realCostPerKg.toFixed(2)} MAD/kg</td>
+                <td style="font-weight:700; color:#1e40af;">+${profit.toLocaleString('fr-FR', {maximumFractionDigits:0})} MAD</td>
             </tr>
         `;
     }).join('');
